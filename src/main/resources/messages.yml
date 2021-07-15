@@ -1,0 +1,36 @@
+# In this file you can always use \n for a new line
+
+prefix: "&eFarms &8» &7"
+
+not-found: "&cPlayer not found."
+
+commands:
+  no-money: "&cYou don't have enough money to buy a farm."
+  not-found: "&cCommand not found. Run /farms help for a commands list."
+  help: "
+  &8&m===========&e Farms Help &8&m===========&e\n
+      &6&l• &e/farms create &8» &7Create a farm
+  "
+  no-args: "
+  &8&m===========&e Farms v%version% &8&m===========&e\n
+      &eAuthor &6&l• &e%author%\n
+      &eLicensed &6&l• &e%license%
+  "
+  reload: "&7Plugin reloaded in &e&n%ms%&ems&7."
+  setup: "&7Now place the farm item."
+  remove-all: "&7Destroyed &e&n%count%&7 farms."
+
+setup:
+  item-name: "&6&l»&e&l» &7Farms Setup &e&l«&6&l«"
+  item-lore: "&7Use this item to setup a &eFarm."
+  created: "&7Farm created successfully."
+  invalid-item: "&cYou can't farm this item."
+
+edit:
+  title: "&6&l»&e&l» &7Farms Editor &e&l«&6&l«"
+  levels: "&6&l»&e&l» &7Levels &e&l«&6&l«"
+  unlocked: "&cYou have already unlocked this level."
+  cannot: "&cYou can't unlock this level at this moment."
+  no-money: "&cYou don't have enough money to upgrade the farm."
+  type: "&6&l»&e&l» &7Type &e&l«&6&l«"
+  no-type: "&cYou cannot use this item as farm type."

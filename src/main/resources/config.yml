@@ -1,0 +1,19 @@
+debug: false
+
+vault:
+  enabled: true
+  price: 1
+  # The math expression will be newLevel * levelUp
+  # For example if you set to 100 the levelUp price to level 5 will be 500
+  levelUp: 100
+
+holograms:
+  enabled: true
+  text: "&7%player%'s Farm"
+
+# Material list: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+items:
+  - "WHEAT"
+  - "POTATOES"
+  - "CARROTS"
+  - "IRON_ORE"

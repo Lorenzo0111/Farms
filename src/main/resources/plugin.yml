@@ -1,0 +1,13 @@
+name: Farms
+version: @version@
+main: me.lorenzo0111.farms.Farms
+api-version: 1.13
+authors: [ Lorenzo0111 ]
+softdepend:
+  - Vault
+  - HolographicDisplays
+commands:
+  farms:
+    description: Farms main command
+    aliases:
+      - farm
