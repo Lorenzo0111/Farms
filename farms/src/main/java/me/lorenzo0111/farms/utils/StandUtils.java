@@ -1,7 +1,6 @@
 package me.lorenzo0111.farms.utils;
 
 import dev.triumphteam.gui.builder.item.ItemBuilder;
-import me.lorenzo0111.farms.api.objects.Farm;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;

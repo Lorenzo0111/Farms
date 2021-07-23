@@ -11,7 +11,6 @@ import me.lorenzo0111.farms.hooks.VaultHook;
 import me.lorenzo0111.farms.utils.SerializationUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

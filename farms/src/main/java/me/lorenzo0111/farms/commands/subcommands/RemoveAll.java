@@ -32,7 +32,7 @@ public class RemoveAll extends SubCommand {
 
         for (Farm farm : farms) {
             farm.safeDestroy();
-        };
+        }
 
         this.getCommand().getPlugin().getDataManager().getFarms().clear();
 

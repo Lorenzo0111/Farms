@@ -1,13 +1,15 @@
 package me.lorenzo0111.farms;
 
 import lombok.Getter;
+import me.lorenzo0111.farms.api.FarmsAPI;
+import me.lorenzo0111.farms.api.IFarmsAPI;
 import me.lorenzo0111.farms.api.objects.Farm;
 import me.lorenzo0111.farms.commands.FarmsCommand;
 import me.lorenzo0111.farms.data.DataManager;
 import me.lorenzo0111.farms.hooks.VaultHook;
 import me.lorenzo0111.farms.tasks.FarmsTask;
-import me.lorenzo0111.farms.utils.ReflectionHandler;
 import me.lorenzo0111.farms.tasks.SaveTask;
+import me.lorenzo0111.farms.utils.ReflectionHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.PluginCommand;
@@ -15,6 +17,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -127,6 +130,9 @@ public final class Farms extends JavaPlugin {
         this.getLogger().info("Scheduling tasks...");
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(this), 0, 60 * 20L);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new FarmsTask(this), 0, 5 * 20L);
+
+        this.getLogger().info("Loading API...");
+        Bukkit.getServicesManager().register(IFarmsAPI.class,new FarmsAPI(this),this, ServicePriority.Normal);
 
         ms = System.currentTimeMillis() - ms;
         this.getLogger().info(getName() + " v" + getDescription().getVersion() + " enabled in " + ms + "ms.");

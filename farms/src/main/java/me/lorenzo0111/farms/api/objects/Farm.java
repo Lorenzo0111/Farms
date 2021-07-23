@@ -20,7 +20,7 @@ import java.util.*;
 
 @NoArgsConstructor
 @Data
-public class Farm implements ConfigurationSerializable {
+public class Farm implements ConfigurationSerializable, IFarm {
     private Location location;
     private UUID uuid;
     private UUID owner;
@@ -85,6 +85,7 @@ public class Farm implements ConfigurationSerializable {
         this.safeDestroy();
     }
 
+    @Override
     public void safeDestroy() {
         location.getBlock().setType(Material.AIR);
         BlockUtils.near(location.clone().subtract(0,1,0).getBlock(), radius).forEach((block) -> {
@@ -99,6 +100,7 @@ public class Farm implements ConfigurationSerializable {
         }
     }
 
+    @Override
     public void pickup(HumanEntity player) {
         ItemStack item = CreateCommand.getItem();
         item = ItemBuilder.from(item)

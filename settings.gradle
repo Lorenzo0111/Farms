@@ -1,1 +1,3 @@
 rootProject.name = 'farms'
+
+include(':farms',':farms-api')

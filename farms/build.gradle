@@ -1,0 +1,55 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+
+    maven { url 'https://jitpack.io' }
+
+    maven { url = "https://repo.mattstudios.me/artifactory/public/" }
+
+    maven { url = "https://repo.codemc.io/repository/maven-public/" }
+}
+
+dependencies {
+    compileOnly "com.github.MilkBowl:VaultAPI:1.7"
+    compileOnly 'org.jetbrains:annotations:20.1.0'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+    compileOnly 'org.spigotmc:spigot-api:1.17-R0.1-SNAPSHOT'
+
+    implementation project(':farms-api')
+    implementation 'org.reflections:reflections:0.9.12'
+    implementation "net.kyori:adventure-api:4.8.1"
+    implementation "net.kyori:adventure-platform-bukkit:4.0.0-SNAPSHOT"
+    implementation "dev.triumphteam:triumph-gui:3.0.3"
+    implementation 'com.github.cryptomorin:XSeries:8.2.0'
+}
+
+jar {
+    archiveBaseName.set("Farms")
+}
+
+shadowJar {
+    archiveBaseName.set("Farms")
+
+    relocate("dev.triumphteam.gui", "me.lorenzo0111.farms.gui")
+    relocate("net.kyori.examination","me.lorenzo0111.farms.libs.examination")
+    relocate("com.cryptomorin.xseries","me.lorenzo0111.farms.libs.xseries")
+    relocate("org.reflections","me.lorenzo0111.farms.libs.reflections")
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        duplicatesStrategy DuplicatesStrategy.INCLUDE
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
