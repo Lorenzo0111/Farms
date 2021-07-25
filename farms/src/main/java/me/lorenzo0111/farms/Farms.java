@@ -129,7 +129,7 @@ public final class Farms extends JavaPlugin {
 
         this.getLogger().info("Scheduling tasks...");
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(this), 0, 60 * 20L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new FarmsTask(this), 0, 5 * 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new FarmsTask(this), 0, getConfig().getInt("tasks.grow", 5) * 20L);
 
         this.getLogger().info("Loading API...");
         Bukkit.getServicesManager().register(IFarmsAPI.class,new FarmsAPI(this),this, ServicePriority.Normal);

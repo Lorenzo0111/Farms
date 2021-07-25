@@ -13,3 +13,8 @@ items:
   - "POTATOES"
   - "CARROTS"
   - "IRON_ORE"
+
+# Time in seconds of each task
+tasks:
+  grow: 5
+  collect: 10

@@ -26,7 +26,7 @@ public class DataManager {
             if (farm.getTask() > 0)
                 continue;
 
-            int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new WorkTask(plugin,farm.getUuid()), 0, 10 * 20L);
+            int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new WorkTask(plugin,farm.getUuid()), 0, plugin.getConfig().getInt("tasks.collect", 10) * 20L);
             farm.setTask(task);
         }
     }
