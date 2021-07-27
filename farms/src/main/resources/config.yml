@@ -8,11 +8,13 @@ vault:
   levelUp: 100
 
 # Material list: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+# Mutation schema: PLACEABLE -> PLACED
+# You can view the placed item watching seeds in debug option(F3) [https://i.gyazo.com/c43c169949b862a934ae11ef9eb64489.png]
 items:
-  - "WHEAT"
-  - "POTATOES"
-  - "CARROTS"
-  - "IRON_ORE"
+  WHEAT: "WHEAT"
+  POTATO: "POTATOES"
+  CARROT: "CARROTS"
+  IRON_ORE: "IRON_ORE"
 
 # Time in seconds of each task
 tasks:

@@ -61,7 +61,7 @@ public class FarmsCommand implements CommandExecutor, TabExecutor {
 
     @Nullable
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String @NotNull [] args) {
         List<String> list = new ArrayList<>();
 
         if (args.length == 0 || args.length == 1) {

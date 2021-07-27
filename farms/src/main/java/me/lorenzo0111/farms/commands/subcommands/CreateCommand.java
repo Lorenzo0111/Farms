@@ -51,7 +51,11 @@ public class CreateCommand extends SubCommand {
 
         target.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getCommand().getPlugin().getMessages().getString("prefix") + this.getCommand().getPlugin().getMessages().getString("commands.setup")));
 
-        target.getInventory().addItem(getItem());
+        ItemStack item = getItem();
+        item = ItemBuilder.from(item)
+                .setNbt("farm_level", "1")
+                .build();
+        target.getInventory().addItem(item);
     }
 
     public static ItemStack getItem() {
@@ -65,7 +69,6 @@ public class CreateCommand extends SubCommand {
                     .name(name)
                     .lore(lore)
                     .setNbt("custom_item", "farms")
-                    .setNbt("farm_level", "1")
                     .build();
         }
 

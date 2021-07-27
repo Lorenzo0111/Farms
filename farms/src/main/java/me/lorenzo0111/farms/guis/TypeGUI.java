@@ -12,23 +12,23 @@ import me.lorenzo0111.farms.utils.TextUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
+import java.util.Objects;
 
 public class TypeGUI extends Gui {
     private final Farm farm;
     private final Farms plugin;
-    private final HumanEntity player;
 
-    public TypeGUI(Farm farm, Farms plugin, HumanEntity player) {
+    public TypeGUI(Farm farm, @NotNull Farms plugin, HumanEntity player) {
         super(1, TextUtils.text(plugin.getMessages(), "edit.type"), EnumSet.noneOf(InteractionModifier.class));
 
         this.farm = farm;
         this.plugin = plugin;
-        this.player = player;
     }
 
     @Override
@@ -49,14 +49,17 @@ public class TypeGUI extends Gui {
             if (item == null || item.getType().equals(Material.AIR))
                 return;
 
-            if (!plugin.getConfig().getStringList("items").contains(item.getType().toString())) {
+            ConfigurationSection section = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("items"));
+
+            if (!section.contains(item.getType().toString())) {
                 e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("prefix") + plugin.getMessages().getString("edit.no-type")));
                 return;
             }
 
             final Material old = farm.getBlock();
 
-            farm.setBlock(item.getType());
+            Material newType = Material.getMaterial(section.getString(item.getType().toString(), item.getType().toString()));
+            farm.setBlock(newType);
             BlockUtils.full(farm, old);
         });
 
