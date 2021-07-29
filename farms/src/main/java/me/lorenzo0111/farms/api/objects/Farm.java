@@ -3,6 +3,7 @@ package me.lorenzo0111.farms.api.objects;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.commands.subcommands.CreateCommand;
 import me.lorenzo0111.farms.data.DataManager;
 import me.lorenzo0111.farms.utils.BlockUtils;
@@ -80,8 +81,8 @@ public class Farm implements ConfigurationSerializable, IFarm {
         return map;
     }
 
-    public void destroy(DataManager data) {
-        data.getFarms().remove(this);
+    public void destroy() {
+        Farms.getInstance().getDataManager().getFarms().remove(this);
         this.safeDestroy();
     }
 
@@ -101,7 +102,7 @@ public class Farm implements ConfigurationSerializable, IFarm {
     }
 
     @Override
-    public void pickup(HumanEntity player) {
+    public void pickup(@NotNull HumanEntity player) {
         ItemStack item = CreateCommand.getItem();
         item = ItemBuilder.from(item)
                 .setNbt("farm_level", String.valueOf(this.getLevel()))

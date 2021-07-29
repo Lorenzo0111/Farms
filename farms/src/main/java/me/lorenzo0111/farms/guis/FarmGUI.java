@@ -95,7 +95,7 @@ public class FarmGUI extends Gui {
         this.setItem(delete.getRow(),delete.getColumn(), ItemBuilder.from(delete.getItem())
                 .asGuiItem(e -> {
                     farm.pickup(e.getWhoClicked());
-                    farm.destroy(plugin.getDataManager());
+                    farm.destroy();
                     this.close(e.getWhoClicked());
                 })
         );
