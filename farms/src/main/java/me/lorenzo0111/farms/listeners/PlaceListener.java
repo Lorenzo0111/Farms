@@ -43,7 +43,7 @@ public class PlaceListener implements Listener {
 
         event.getBlock().setType(Material.AIR);
 
-        int level = item.getInteger("farm_level");
+        int level = compound.getInteger("farm_level");
 
         Location location = event.getBlock().getLocation().subtract(0,1,0);
         Material before = location.getBlock().getType();

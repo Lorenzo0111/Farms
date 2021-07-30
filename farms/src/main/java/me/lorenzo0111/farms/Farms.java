@@ -1,6 +1,6 @@
 package me.lorenzo0111.farms;
 
-import com.cryptomorin.xseries.XMaterial;
+import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import lombok.Getter;
 import me.lorenzo0111.farms.api.FarmsAPI;
 import me.lorenzo0111.farms.api.IFarmsAPI;
@@ -40,6 +40,11 @@ public final class Farms extends JavaPlugin {
     private FileConfiguration guiConfig;
 
     @Getter private static Farms instance;
+
+    @Override
+    public void onLoad() {
+        MinecraftVersion.replaceLogger(this.getLogger());
+    }
 
     @Override
     public void onEnable() {

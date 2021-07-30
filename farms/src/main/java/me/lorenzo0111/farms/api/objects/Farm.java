@@ -17,7 +17,12 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 @NoArgsConstructor
 @Data
@@ -30,7 +35,7 @@ public class Farm implements ConfigurationSerializable, IFarm {
     private FarmType type;
     private Material block;
     private Material before;
-    private transient int task;
+    private transient Integer task = null;
     private List<ItemStack> items = new ArrayList<>();
 
     /**
@@ -54,7 +59,7 @@ public class Farm implements ConfigurationSerializable, IFarm {
         this.before = before;
     }
 
-    public Farm(Map<String,Object> data) {
+    public Farm(@NotNull Map<String,Object> data) {
         this(
                 (Location) data.get("location"),
                 UUID.fromString((String) data.get("uuid")),
@@ -81,6 +86,7 @@ public class Farm implements ConfigurationSerializable, IFarm {
         return map;
     }
 
+    @Override
     public void destroy() {
         Farms.getInstance().getDataManager().getFarms().remove(this);
         this.safeDestroy();
@@ -93,7 +99,7 @@ public class Farm implements ConfigurationSerializable, IFarm {
             if (block.getType().equals(XMaterial.FARMLAND.parseMaterial()) || block.getType().equals(Material.GOLD_BLOCK))
                 block.setType(Material.AIR);
         });
-        if (task > 0)
+        if (task != null)
             Bukkit.getScheduler().cancelTask(this.getTask());
         for (Entity entity : location.getChunk().getEntities()) {
             UUID uuid = StandUtils.farm(entity);

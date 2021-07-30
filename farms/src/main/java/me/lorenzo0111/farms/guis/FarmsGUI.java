@@ -57,7 +57,9 @@ public class FarmsGUI extends PaginatedGui {
                 new Item(ItemBuilder.from(material)
                         .name(Component.text("§b§l[FARM]§e %name%"))
                         .lore(Component.text("§6Owner: §7%owner%"),
-                                Component.text("§6Type: §7%type%"))
+                                Component.text("§6Type: §7%type%"),
+                                Component.empty(),
+                                Component.text("§7§oClick to remove"))
                         .build(), -1, -1));
 
         for (Farm farm : farms) {
@@ -78,7 +80,13 @@ public class FarmsGUI extends PaginatedGui {
             meta.setLore(lore);
             stack.setItemMeta(meta);
 
-            this.addItem(ItemBuilder.from(stack).asGuiItem());
+            this.addItem(ItemBuilder.from(stack).asGuiItem(e -> {
+                if (farm.getOwner().equals(e.getWhoClicked().getUniqueId()) || e.getWhoClicked().hasPermission("farms.gui.other")) {
+                    farm.destroy();
+                    this.close(e.getWhoClicked());
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> this.open(e.getWhoClicked()), 20L);
+                }
+            }));
         }
 
         super.open(player);

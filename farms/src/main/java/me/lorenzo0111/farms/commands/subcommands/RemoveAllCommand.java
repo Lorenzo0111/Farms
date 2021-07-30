@@ -9,15 +9,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class RemoveAll extends SubCommand {
+public class RemoveAllCommand extends SubCommand {
 
-    public RemoveAll(FarmsCommand command) {
+    public RemoveAllCommand(FarmsCommand command) {
         super(command);
     }
 
     @Override
     public String[] getName() {
-        return new String[]{"removeall","deleteall"};
+        return new String[]{"removeall","deleteall","clear"};
     }
 
     @Override
@@ -35,6 +35,7 @@ public class RemoveAll extends SubCommand {
         }
 
         this.getCommand().getPlugin().getDataManager().getFarms().clear();
+        this.getCommand().getPlugin().getDataManager().save(false);
 
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', getCommand().getPlugin().getMessages().getString("prefix") + getCommand().getPlugin().getMessages().getString("commands.remove-all")).replace("%count%",String.valueOf(count)));
     }

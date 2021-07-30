@@ -23,7 +23,7 @@ public class DataManager {
 
     public void init() {
         for (Farm farm : farms) {
-            if (farm.getTask() > 0)
+            if (farm.getTask() != null)
                 continue;
 
             int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new WorkTask(plugin,farm.getUuid()), 0, plugin.getConfig().getInt("tasks.collect", 10) * 20L);
