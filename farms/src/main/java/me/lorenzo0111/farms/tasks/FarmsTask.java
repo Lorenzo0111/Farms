@@ -1,11 +1,11 @@
 package me.lorenzo0111.farms.tasks;
 
+import com.cryptomorin.xseries.XBlock;
 import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
 import me.lorenzo0111.farms.utils.BlockUtils;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.Ageable;
 
 import java.util.List;
 
@@ -25,13 +25,10 @@ public class FarmsTask implements Runnable {
                 if (executed >= 5)
                     continue;
 
-                if (block.getBlockData() instanceof Ageable) {
-                    Ageable data = (Ageable) block.getBlockData();
-                    if (data.getAge() != data.getMaximumAge()) {
-                        data.setAge(data.getAge() + 1);
-                        block.setBlockData(data);
-                        executed++;
-                    }
+                int age = XBlock.getAge(block);
+                if (age < 7) {
+                    XBlock.setAge(block, age+1);
+                    executed++;
                 }
             }
         }

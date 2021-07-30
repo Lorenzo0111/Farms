@@ -10,3 +10,26 @@ commands:
     description: Farms main command
     aliases:
       - farm
+permissions:
+  farms.admin:
+    description: "All admin permissions of the plugin"
+    children:
+      - "farms.create"
+      - "farms.gui"
+      - "farms.remove.all"
+      - "farms.reload"
+      - "farms.premium.verify"
+  farms.create:
+    description: "Create a farm"
+    default: true
+  farms.gui:
+    description: "Open a gui with all farms"
+    default: op
+  farms.remove.all:
+    description: "Remove all existing farms"
+    default: op
+  farms.reload:
+    description: "Reload the plugin"
+    default: op
+  farms.premium.verify:
+    description: "Get verification token, it may be asked by the plugin owner."

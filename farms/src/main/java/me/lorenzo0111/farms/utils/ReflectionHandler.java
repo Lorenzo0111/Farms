@@ -1,6 +1,8 @@
 package me.lorenzo0111.farms.utils;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,11 +15,12 @@ public final class ReflectionHandler<T> {
     private final Class<? extends T> subType;
     private final Class<?>[] paramTypes;
 
-    public static <T> ReflectionHandler<T> with(String packageName, Class<? extends T> subType, Class<?>... paramTypes) {
+    @Contract("_, _, _ -> new")
+    public static <T> @NotNull ReflectionHandler<T> with(String packageName, Class<? extends T> subType, Class<?>... paramTypes) {
         return new ReflectionHandler<>(packageName, subType, paramTypes);
     }
 
-    public List<T> build(Object... params) {
+    public @NotNull List<T> build(Object... params) {
         List<T> list = new ArrayList<>();
 
         for (Class<? extends T> clazz : new Reflections(packageName)

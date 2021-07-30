@@ -2,6 +2,7 @@ package me.lorenzo0111.farms.commands;
 
 import lombok.Getter;
 import me.lorenzo0111.farms.Farms;
+import me.lorenzo0111.farms.premium.PremiumHandler;
 import me.lorenzo0111.farms.utils.ReflectionHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -42,6 +43,11 @@ public class FarmsCommand implements CommandExecutor, TabExecutor {
         if (args.length > 0) {
             for (SubCommand subcommand : subCommands) {
                 if (Arrays.asList(subcommand.getName()).contains(args[0].toLowerCase())) {
+                    if (subcommand.getPermission() != null && !sender.hasPermission(subcommand.getPermission())) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("prefix") + plugin.getMessages().getString("no-permission")));
+                        return true;
+                    }
+
                     subcommand.execute((Player) sender, args);
                     return true;
                 }
@@ -49,8 +55,8 @@ public class FarmsCommand implements CommandExecutor, TabExecutor {
         }
 
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("commands.no-args")
-                    .replace("%author%", "Lorenzo0111").replace("%license%", "Target")
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("commands.no-args", "")
+                    .replace("%author%", "Lorenzo0111").replace("%license%", PremiumHandler.formatUserURL())
                     .replace("%version%", plugin.getDescription().getVersion())));
             return true;
         }

@@ -1,5 +1,6 @@
 package me.lorenzo0111.farms.guis;
 
+import com.cryptomorin.xseries.XMaterial;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.components.InteractionModifier;
 import dev.triumphteam.gui.guis.Gui;
@@ -24,7 +25,7 @@ public class TypeGUI extends Gui {
     private final Farm farm;
     private final Farms plugin;
 
-    public TypeGUI(Farm farm, @NotNull Farms plugin, HumanEntity player) {
+    public TypeGUI(Farm farm, @NotNull Farms plugin) {
         super(1, TextUtils.text(plugin.getMessages(), "edit.type"), EnumSet.noneOf(InteractionModifier.class));
 
         this.farm = farm;
@@ -36,7 +37,7 @@ public class TypeGUI extends Gui {
         Item filler = SerializationUtils.item(plugin.getGuiConfig(), "filler");
 
         Item info = SerializationUtils.itemOr(plugin.getGuiConfig(), plugin.getGuiFile(), "type.info", new Item(
-                ItemBuilder.from(Material.END_ROD)
+                ItemBuilder.from(XMaterial.END_ROD.parseMaterial() == null ? Objects.requireNonNull(XMaterial.REDSTONE_TORCH.parseMaterial(), "Cannot find an item to use") : XMaterial.END_ROD.parseMaterial())
                         .name(Component.text("§7Drag your item"))
                         .lore(Component.text("§7Drag your item inside the empty slot"), Component.text("§7Then close the gui with the §e§nESC§7 button."))
                         .build(),

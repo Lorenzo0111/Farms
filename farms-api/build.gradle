@@ -1,6 +1,10 @@
 repositories {
     mavenCentral()
     maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+    maven {
         name = 'spigotmc-repo'
         url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
     }
@@ -11,6 +15,6 @@ tasks.withType(Jar){
 }
 
 dependencies {
-    compileOnly 'org.jetbrains:annotations:21.0.1'
-    compileOnly 'org.spigotmc:spigot-api:1.17-R0.1-SNAPSHOT'
+    compileOnly "org.jetbrains:annotations:21.0.1"
+    compileOnly "org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT"
 }

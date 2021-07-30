@@ -1,5 +1,6 @@
 package me.lorenzo0111.farms.tasks;
 
+import com.cryptomorin.xseries.XBlock;
 import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
@@ -7,8 +8,8 @@ import me.lorenzo0111.farms.commands.subcommands.CreateCommand;
 import me.lorenzo0111.farms.utils.BlockUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.Ageable;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.Crops;
 
 import java.util.Collection;
 import java.util.List;
@@ -20,6 +21,7 @@ public class WorkTask implements Runnable {
     private final UUID farm;
 
     @Override
+    @SuppressWarnings("deprecation")
     public void run() {
         Farm farm = plugin.getDataManager().get(this.farm);
         if (farm == null)
@@ -38,17 +40,15 @@ public class WorkTask implements Runnable {
                 continue;
             }
 
-            if (block.getType().equals(CreateCommand.getItem().getType()))
+            if (block.getType().equals(CreateCommand.getItem().getItem().getType()))
                 continue;
 
-            if (block.getBlockData() instanceof Ageable) {
-                Ageable ageable = (Ageable) block.getBlockData();
-                if (ageable.getAge() != ageable.getMaximumAge())
+            if (block.getState().getData() instanceof Crops) {
+                if (XBlock.getAge(block) != 7)
                     continue;
 
                 this.collect(farm,block);
-                ageable.setAge(0);
-                block.setBlockData(ageable);
+                XBlock.setAge(block,0);
             } else {
                 this.collect(farm,block);
                 block.setType(Material.AIR);

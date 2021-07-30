@@ -1,11 +1,11 @@
 package me.lorenzo0111.farms.api.objects;
 
-import dev.triumphteam.gui.builder.item.ItemBuilder;
+import com.cryptomorin.xseries.XMaterial;
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.commands.subcommands.CreateCommand;
-import me.lorenzo0111.farms.data.DataManager;
 import me.lorenzo0111.farms.utils.BlockUtils;
 import me.lorenzo0111.farms.utils.StandUtils;
 import org.bukkit.Bukkit;
@@ -90,7 +90,7 @@ public class Farm implements ConfigurationSerializable, IFarm {
     public void safeDestroy() {
         location.getBlock().setType(Material.AIR);
         BlockUtils.near(location.clone().subtract(0,1,0).getBlock(), radius).forEach((block) -> {
-            if (block.getType().equals(Material.FARMLAND) || block.getType().equals(Material.GOLD_BLOCK))
+            if (block.getType().equals(XMaterial.FARMLAND.parseMaterial()) || block.getType().equals(Material.GOLD_BLOCK))
                 block.setType(Material.AIR);
         });
         if (task > 0)
@@ -103,11 +103,9 @@ public class Farm implements ConfigurationSerializable, IFarm {
 
     @Override
     public void pickup(@NotNull HumanEntity player) {
-        ItemStack item = CreateCommand.getItem();
-        item = ItemBuilder.from(item)
-                .setNbt("farm_level", String.valueOf(this.getLevel()))
-                .build();
-        player.getInventory().addItem(item);
+        NBTItem item = CreateCommand.getItem();
+        item.setInteger("farm_level", this.getLevel());
+        player.getInventory().addItem(item.getItem());
     }
 
     @Override

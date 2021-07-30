@@ -1,5 +1,6 @@
 package me.lorenzo0111.farms.api;
 
+import com.cryptomorin.xseries.XMaterial;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
 import me.lorenzo0111.farms.api.objects.FarmType;
@@ -39,8 +40,8 @@ public class FarmsAPI implements IFarmsAPI {
 
         location.getBlock().setType(Material.GOLD_BLOCK);
         BlockUtils.near(location.getBlock(), 2).forEach(block -> {
-            if (block.getType().equals(Material.DIRT) || block.getType().equals(Material.GRASS_BLOCK) || block.getType().equals(Material.AIR)) {
-                block.setType(Material.FARMLAND);
+            if (block.getType().equals(Material.DIRT) || block.getType().equals(XMaterial.GRASS_BLOCK.parseMaterial()) || block.getType().equals(Material.AIR)) {
+                block.setType(XMaterial.FARMLAND.parseMaterial());
             }
         });
 

@@ -3,6 +3,7 @@
 prefix: "&eFarms &8» &7"
 
 not-found: "&cPlayer not found."
+no-permission: "&cYou do not have the permission to execute this command."
 
 commands:
   no-money: "&cYou don't have enough money to buy a farm."

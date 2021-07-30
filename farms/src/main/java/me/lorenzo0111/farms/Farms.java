@@ -1,5 +1,6 @@
 package me.lorenzo0111.farms;
 
+import com.cryptomorin.xseries.XMaterial;
 import lombok.Getter;
 import me.lorenzo0111.farms.api.FarmsAPI;
 import me.lorenzo0111.farms.api.IFarmsAPI;
@@ -114,11 +115,6 @@ public final class Farms extends JavaPlugin {
             this.getLogger().info("Vault hooked! Using Vault economy..");
         }
 
-        this.getLogger().info("Looking for Vault..");
-        if (VaultHook.init(this)) {
-            this.getLogger().info("Vault hooked! Using Vault economy..");
-        }
-
         FarmsCommand command = new FarmsCommand(this);
         PluginCommand farmsCmd = this.getCommand("farms");
 
@@ -140,7 +136,8 @@ public final class Farms extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        dataManager.save(true);
+        if (dataManager != null)
+            dataManager.save(true);
         Bukkit.getScheduler().cancelTasks(this);
     }
 

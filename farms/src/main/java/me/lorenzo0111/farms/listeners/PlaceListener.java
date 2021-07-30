@@ -1,13 +1,15 @@
 package me.lorenzo0111.farms.listeners;
 
-import dev.triumphteam.gui.components.util.ItemNbt;
+import com.cryptomorin.xseries.XMaterial;
+import de.tr7zw.changeme.nbtapi.NBTCompound;
+import de.tr7zw.changeme.nbtapi.NBTContainer;
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
 import me.lorenzo0111.farms.api.objects.FarmType;
 import me.lorenzo0111.farms.utils.BlockUtils;
 import me.lorenzo0111.farms.utils.StandUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -23,9 +26,15 @@ public class PlaceListener implements Listener {
     private final Farms plugin;
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
-    public void onPlace(BlockPlaceEvent event) {
-        if (ItemNbt.getString(event.getItemInHand(), "custom_item") == null)
+    public void onPlace(@NotNull BlockPlaceEvent event) {
+        NBTContainer item = NBTItem.convertItemtoNBT(event.getItemInHand());
+
+        NBTCompound compound = item.getCompound("tag");
+        if (compound == null) return;
+
+        if (!"farms".equals(compound.getString("custom_item"))) {
             return;
+        }
 
         if (event.getBlock().getLocation().clone().subtract(0,1,0).getBlock().getType().equals(Material.BEDROCK)) {
             event.setCancelled(true);
@@ -34,8 +43,7 @@ public class PlaceListener implements Listener {
 
         event.getBlock().setType(Material.AIR);
 
-        String level = ItemNbt.getString(event.getItemInHand(), "farm_level");
-        int levelInt = NumberUtils.toInt(level, 1);
+        int level = item.getInteger("farm_level");
 
         Location location = event.getBlock().getLocation().subtract(0,1,0);
         Material before = location.getBlock().getType();
@@ -43,7 +51,7 @@ public class PlaceListener implements Listener {
                 event.getBlock().getLocation(),
                 UUID.randomUUID(),
                 event.getPlayer().getUniqueId(),
-                levelInt,
+                level,
                 2,
                 FarmType.BLOCKS,
                 Material.WHEAT,
@@ -53,8 +61,8 @@ public class PlaceListener implements Listener {
 
         location.getBlock().setType(Material.GOLD_BLOCK);
         BlockUtils.near(location.getBlock(), 2).forEach(block -> {
-            if (block.getType().equals(Material.DIRT) || block.getType().equals(Material.GRASS_BLOCK) || block.getType().equals(Material.AIR)) {
-                block.setType(Material.FARMLAND);
+            if (block.getType().equals(Material.DIRT) || block.getType().equals(XMaterial.GRASS_BLOCK.parseMaterial()) || block.getType().equals(Material.AIR)) {
+                block.setType(XMaterial.FARMLAND.parseMaterial());
             }
         });
 

@@ -1,20 +1,31 @@
 package me.lorenzo0111.farms.premium;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 public final class PremiumHandler {
 
-    public static String getUserID() {
+    @Contract(pure = true)
+    public static @NotNull String getUserID() {
         return "%%__USER__%%";
     }
 
-    public static String getResourceID() {
+    @Contract(pure = true)
+    public static @NotNull String getResourceID() {
         return "%%__RESOURCE__%%";
     }
 
-    public static String getDownloadID() {
+    @Contract(pure = true)
+    public static @NotNull String getDownloadID() {
         return "%%__NONCE__%%";
     }
 
-    private static boolean isPremium() {
+    @Contract(pure = true)
+    public static @NotNull String formatUserURL() {
+        return "https://www.spigotmc.org/members/" + getUserID();
+    }
+
+    public static boolean isPremium() {
         return !getUserID().contains("__USER__");
     }
 
