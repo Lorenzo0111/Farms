@@ -30,7 +30,7 @@ public class FarmsGUI extends PaginatedGui {
     private final Player author;
 
     public FarmsGUI(Farms plugin, Player author) {
-        super(3, 17, ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("commands.gui", "&6&l»&e&l» &7Farms &e&l«&6&l«")), EnumSet.noneOf(InteractionModifier.class));
+        super(3, 17, ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("commands.gui")), EnumSet.noneOf(InteractionModifier.class));
 
         this.plugin = plugin;
         this.author = author;

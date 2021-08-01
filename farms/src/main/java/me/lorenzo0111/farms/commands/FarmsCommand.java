@@ -55,7 +55,7 @@ public class FarmsCommand implements CommandExecutor, TabExecutor {
         }
 
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("commands.no-args", "")
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("commands.no-args")
                     .replace("%author%", "Lorenzo0111").replace("%license%", PremiumHandler.formatUserURL())
                     .replace("%version%", plugin.getDescription().getVersion())));
             return true;

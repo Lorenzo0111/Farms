@@ -27,6 +27,7 @@ setup:
   item-lore: "&7Use this item to setup a &eFarm."
   created: "&7Farm created successfully."
   invalid-item: "&cYou can't farm this item."
+  collector: "&7Collector created successfully."
 
 edit:
   title: "&6&l»&e&l» &7Farms Editor &e&l«&6&l«"

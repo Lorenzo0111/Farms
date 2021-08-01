@@ -5,6 +5,7 @@ api-version: 1.13
 authors: [ Lorenzo0111 ]
 softdepend:
   - Vault
+  - WorldGuard
 commands:
   farms:
     description: Farms main command

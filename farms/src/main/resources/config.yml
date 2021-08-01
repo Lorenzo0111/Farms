@@ -7,6 +7,9 @@ vault:
   # For example if you set to 100 the levelUp price to level 5 will be 500
   levelUp: 100
 
+worldguard:
+  enabled: true
+
 # Material list: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
 # Mutation schema: PLACEABLE -> PLACED
 # You can view the placed item watching seeds in debug option(F3) [https://i.gyazo.com/8924a4e24cf3eb86010d1f1083300320.png]

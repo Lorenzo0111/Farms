@@ -35,6 +35,7 @@ public class Farm implements ConfigurationSerializable, IFarm {
     private FarmType type;
     private Material block;
     private Material before;
+    private Location collector;
     private transient Integer task = null;
     private List<ItemStack> items = new ArrayList<>();
 
@@ -70,6 +71,9 @@ public class Farm implements ConfigurationSerializable, IFarm {
                 Material.getMaterial((String) data.get("block")),
                 Material.getMaterial((String) data.get("before"))
         );
+
+        if (data.containsKey("collector"))
+            this.setCollector((Location) data.get("collector"));
     }
 
     @Override
@@ -83,6 +87,8 @@ public class Farm implements ConfigurationSerializable, IFarm {
         map.put("type",type.toString());
         map.put("block",block.toString());
         map.put("before",before.toString());
+        if (collector != null)
+            map.put("collector", collector);
         return map;
     }
 

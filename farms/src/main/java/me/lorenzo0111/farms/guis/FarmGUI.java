@@ -8,6 +8,7 @@ import lombok.Getter;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
 import me.lorenzo0111.farms.api.objects.Item;
+import me.lorenzo0111.farms.collector.CollectorHandler;
 import me.lorenzo0111.farms.utils.SerializationUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -26,8 +27,8 @@ public class FarmGUI extends Gui {
     private final Player author;
     private final Farm farm;
 
-    public FarmGUI(Farms plugin, Player author, Farm farm) {
-        super(3, ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("edit.title") + ""), EnumSet.noneOf(InteractionModifier.class));
+    public FarmGUI(@NotNull Farms plugin, Player author, Farm farm) {
+        super(5, ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("edit.title") + ""), EnumSet.noneOf(InteractionModifier.class));
 
         this.plugin = plugin;
         this.author = author;
@@ -80,6 +81,16 @@ public class FarmGUI extends Gui {
                         .build(), 5, 1)
         );
 
+        Item collector = SerializationUtils.itemOr(
+                plugin.getGuiConfig(),
+                plugin.getGuiFile(),
+                "collector",
+                new Item(ItemBuilder.from(Material.HOPPER)
+                        .name(Component.text("§7Collector"))
+                        .lore(Component.text("§7Click to §e§nset§7 a chest as collector."))
+                        .build(), 5, 5)
+        );
+
         Item storage =  SerializationUtils.itemOr(
                 plugin.getGuiConfig(),
                 plugin.getGuiFile(),
@@ -112,6 +123,10 @@ public class FarmGUI extends Gui {
         this.setItem(type.getRow(),type.getColumn(), ItemBuilder.from(type.getItem()).asGuiItem(e -> {
             e.getWhoClicked().closeInventory();
             new TypeGUI(farm,plugin).open(player);
+        }));
+        this.setItem(collector.getRow(),collector.getColumn(), ItemBuilder.from(collector.getItem()).asGuiItem(e -> {
+            e.getWhoClicked().closeInventory();
+            CollectorHandler.addMember((Player) e.getWhoClicked(), farm);
         }));
 
         super.open(player);

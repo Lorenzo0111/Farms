@@ -6,9 +6,12 @@ import me.lorenzo0111.farms.api.FarmsAPI;
 import me.lorenzo0111.farms.api.IFarmsAPI;
 import me.lorenzo0111.farms.api.objects.Farm;
 import me.lorenzo0111.farms.commands.FarmsCommand;
+import me.lorenzo0111.farms.config.UpdatingConfig;
 import me.lorenzo0111.farms.data.DataManager;
 import me.lorenzo0111.farms.hooks.VaultHook;
+import me.lorenzo0111.farms.hooks.WorldGuardHook;
 import me.lorenzo0111.farms.tasks.FarmsTask;
+import me.lorenzo0111.farms.tasks.QueueTask;
 import me.lorenzo0111.farms.tasks.SaveTask;
 import me.lorenzo0111.farms.utils.ReflectionHandler;
 import org.bukkit.Bukkit;
@@ -34,7 +37,7 @@ public final class Farms extends JavaPlugin {
     private DataManager dataManager;
 
     private File messagesFile;
-    private FileConfiguration messages;
+    private UpdatingConfig messages;
 
     private File guiFile;
     private FileConfiguration guiConfig;
@@ -120,6 +123,11 @@ public final class Farms extends JavaPlugin {
             this.getLogger().info("Vault hooked! Using Vault economy..");
         }
 
+        this.getLogger().info("Looking for WorldGuard..");
+        if (WorldGuardHook.init(this)) {
+            this.getLogger().info("WorldGuard hooked! Using WorldGuard api..");
+        }
+
         this.getLogger().info("Loading commands..");
         FarmsCommand command = new FarmsCommand(this);
         PluginCommand farmsCmd = this.getCommand("farms");
@@ -132,6 +140,7 @@ public final class Farms extends JavaPlugin {
         this.getLogger().info("Scheduling tasks...");
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(this), 0, 60 * 20L);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new FarmsTask(this), 0, getConfig().getInt("tasks.grow", 5) * 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new QueueTask(this), 0, getConfig().getInt("tasks.collect", 10) * 20L);
 
         this.getLogger().info("Loading API...");
         Bukkit.getServicesManager().register(IFarmsAPI.class,new FarmsAPI(this),this, ServicePriority.Normal);
@@ -151,7 +160,7 @@ public final class Farms extends JavaPlugin {
         dataManager.save(false);
         this.reloadData();
 
-        messages = YamlConfiguration.loadConfiguration(messagesFile);
+        messages = new UpdatingConfig(messagesFile,null);
         guiConfig = YamlConfiguration.loadConfiguration(guiFile);
 
         this.reloadConfig();
