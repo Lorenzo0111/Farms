@@ -120,6 +120,7 @@ public final class Farms extends JavaPlugin {
             this.getLogger().info("Vault hooked! Using Vault economy..");
         }
 
+        this.getLogger().info("Loading commands..");
         FarmsCommand command = new FarmsCommand(this);
         PluginCommand farmsCmd = this.getCommand("farms");
 
