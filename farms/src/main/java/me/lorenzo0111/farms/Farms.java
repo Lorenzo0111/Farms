@@ -21,6 +21,8 @@ import me.lorenzo0111.farms.tasks.FarmsTask;
 import me.lorenzo0111.farms.tasks.QueueTask;
 import me.lorenzo0111.farms.tasks.SaveTask;
 import me.lorenzo0111.farms.utils.ReflectionHandler;
+import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.PluginCommand;
@@ -154,6 +156,9 @@ public final class Farms extends JavaPlugin {
 
         this.getLogger().info("Loading API...");
         Bukkit.getServicesManager().register(IFarmsAPI.class,new FarmsAPI(this),this, ServicePriority.Normal);
+
+        new Metrics(this, 12310)
+                .addCustomChart(new SingleLineChart("farms", () -> dataManager.getFarms().size()));
 
         ms = System.currentTimeMillis() - ms;
         this.getLogger().info(getName() + " v" + getDescription().getVersion() + " enabled in " + ms + "ms.");
