@@ -1,9 +1,16 @@
+/*
+ * -------------------------------------
+ * Copyright Lorenzo0111 2021
+ * https://github.com/Lorenzo0111
+ * -------------------------------------
+ */
+
 package me.lorenzo0111.farms.utils;
 
+import com.haroldstudios.hexitextlib.HexResolver;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import me.lorenzo0111.farms.api.objects.Item;
 import net.kyori.adventure.text.Component;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -57,11 +64,11 @@ public final class SerializationUtils {
         if (amount > -1)
             builder.amount(amount);
         if (name != null)
-            builder.name(Component.text(ChatColor.translateAlternateColorCodes('&', name)));
+            builder.name(Component.text(HexResolver.parseHexString(name, TextUtils.PATTERN)));
         if (lore != null) {
             List<Component> newLore = new ArrayList<>();
             for (String l : lore) {
-                newLore.add(Component.text(ChatColor.translateAlternateColorCodes('&', l)));
+                newLore.add(Component.text(HexResolver.parseHexString(l, TextUtils.PATTERN)));
             }
             builder.lore(newLore);
         }

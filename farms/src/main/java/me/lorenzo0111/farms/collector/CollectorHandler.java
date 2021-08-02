@@ -25,6 +25,7 @@ public class CollectorHandler {
     public static void addMember(@NotNull Player player, @NotNull Farm farm) {
         if (contains(player)) removeMember(player);
 
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Farms.getInstance().getMessages().getString("prefix") + Farms.getInstance().getMessages().getString("setup.set-collector")));
         CREATING.put(player.getUniqueId(), farm.getUuid());
     }
 

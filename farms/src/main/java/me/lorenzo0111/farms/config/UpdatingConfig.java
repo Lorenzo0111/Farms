@@ -7,6 +7,8 @@
 
 package me.lorenzo0111.farms.config;
 
+import com.google.common.base.Charsets;
+import me.lorenzo0111.farms.Farms;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -28,12 +30,13 @@ public class UpdatingConfig {
         this.file = file;
         this.configuration = configuration == null ? YamlConfiguration.loadConfiguration(file) : configuration;
 
-        try(InputStream stream = this.getClass().getResourceAsStream(file.getName())) {
+        try(InputStream stream = this.getClass().getClassLoader().getResourceAsStream(file.getName())) {
             if (stream == null) {
+                Farms.getInstance().getLogger().info("[UpdatingConfig] Unable to create a stream for " + file.getName() + ".");
                 return;
             }
 
-            Reader reader = new InputStreamReader(stream);
+            Reader reader = new InputStreamReader(stream, Charsets.UTF_8);
             this.configuration.setDefaults(YamlConfiguration.loadConfiguration(reader));
             reader.close();
         } catch (IOException e) {

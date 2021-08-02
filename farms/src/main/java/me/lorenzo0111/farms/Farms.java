@@ -1,3 +1,10 @@
+/*
+ * -------------------------------------
+ * Copyright Lorenzo0111 2021
+ * https://github.com/Lorenzo0111
+ * -------------------------------------
+ */
+
 package me.lorenzo0111.farms;
 
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
@@ -56,6 +63,9 @@ public final class Farms extends JavaPlugin {
 
         ConfigurationSerialization.registerClass(Farm.class);
         this.saveDefaultConfig();
+
+        this.getLogger().info("Loading NBTAPI..");
+        MinecraftVersion.getVersion();
 
         this.getLogger().info("Loading existing farms..");
         this.dataFile = new File(this.getDataFolder(), "data.yml");

@@ -1,3 +1,10 @@
+/*
+ * -------------------------------------
+ * Copyright Lorenzo0111 2021
+ * https://github.com/Lorenzo0111
+ * -------------------------------------
+ */
+
 package me.lorenzo0111.farms.guis;
 
 import com.cryptomorin.xseries.XMaterial;
@@ -53,7 +60,7 @@ public class FarmsGUI extends PaginatedGui {
 
         Item item = SerializationUtils.itemOr(plugin.getGuiConfig(),
                 plugin.getGuiFile(),
-                "gui.farm",
+                "farms.farm",
                 new Item(ItemBuilder.from(material)
                         .name(Component.text("§b§l[FARM]§e %name%"))
                         .lore(Component.text("§6Owner: §7%owner%"),

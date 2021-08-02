@@ -1,3 +1,10 @@
+/*
+ * -------------------------------------
+ * Copyright Lorenzo0111 2021
+ * https://github.com/Lorenzo0111
+ * -------------------------------------
+ */
+
 package me.lorenzo0111.farms.listeners;
 
 import com.cryptomorin.xseries.XMaterial;
@@ -8,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
 import me.lorenzo0111.farms.api.objects.FarmType;
+import me.lorenzo0111.farms.commands.subcommands.CreateCommand;
 import me.lorenzo0111.farms.utils.BlockUtils;
 import me.lorenzo0111.farms.utils.StandUtils;
 import org.bukkit.ChatColor;
@@ -27,6 +35,8 @@ public class PlaceListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
     public void onPlace(@NotNull BlockPlaceEvent event) {
+        if (!event.getItemInHand().getType().equals(CreateCommand.getItem().getItem().getType())) return;
+
         NBTContainer item = NBTItem.convertItemtoNBT(event.getItemInHand());
 
         NBTCompound compound = item.getCompound("tag");

@@ -1,3 +1,10 @@
+/*
+ * -------------------------------------
+ * Copyright Lorenzo0111 2021
+ * https://github.com/Lorenzo0111
+ * -------------------------------------
+ */
+
 package me.lorenzo0111.farms.guis;
 
 import com.cryptomorin.xseries.XMaterial;
@@ -54,17 +61,17 @@ public class FarmGUI extends Gui {
         Item delete =  SerializationUtils.itemOr(
                 plugin.getGuiConfig(),
                 plugin.getGuiFile(),
-                "delete",
+                "farm.delete",
                 new Item(ItemBuilder.from(Material.BARRIER)
                         .name(Component.text("§7Pickup"))
                         .lore(Component.text("§7Click to §c§npickup§7 the farm."))
-                        .build(), 5, 3)
+                        .build(), 5, 5)
         );
 
         Item levels =  SerializationUtils.itemOr(
                 plugin.getGuiConfig(),
                 plugin.getGuiFile(),
-                "levels",
+                "farm.levels",
                 new Item(ItemBuilder.from(Material.NAME_TAG)
                         .name(Component.text("§7Levels"))
                         .lore(Component.text("§7Click to §e§nedit§7 the farm level."))
@@ -74,7 +81,7 @@ public class FarmGUI extends Gui {
         Item type =  SerializationUtils.itemOr(
                 plugin.getGuiConfig(),
                 plugin.getGuiFile(),
-                "type",
+                "farm.type",
                 new Item(ItemBuilder.from(Material.DIAMOND_AXE)
                         .name(Component.text("§7Type"))
                         .lore(Component.text("§7Click to §e§nedit§7 the farm type."))
@@ -84,17 +91,17 @@ public class FarmGUI extends Gui {
         Item collector = SerializationUtils.itemOr(
                 plugin.getGuiConfig(),
                 plugin.getGuiFile(),
-                "collector",
+                "farm.collector",
                 new Item(ItemBuilder.from(Material.HOPPER)
                         .name(Component.text("§7Collector"))
-                        .lore(Component.text("§7Click to §e§nset§7 a chest as collector."))
-                        .build(), 5, 5)
+                        .lore(Component.text("§7Click to §e§nset§7 a chest as collector."), Component.text("§7If you want to unlink it, break the chest."))
+                        .build(), 5, 3)
         );
 
         Item storage =  SerializationUtils.itemOr(
                 plugin.getGuiConfig(),
                 plugin.getGuiFile(),
-                "storage",
+                "farm.storage",
                 new Item(ItemBuilder.from(Material.CHEST)
                         .name(Component.text("§7Storage"))
                         .lore(Component.text("§7Click to §e§ncollect§7 all farmed items."))

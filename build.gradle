@@ -1,14 +1,24 @@
+/*
+ * -------------------------------------
+ * Copyright Lorenzo0111 2021
+ * https://github.com/Lorenzo0111
+ * -------------------------------------
+ */
+
 plugins {
     id 'java'
     id "com.github.johnrengelman.shadow" version "7.0.0"
 }
 
+compileJava.options.encoding = "UTF-8"
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'com.github.johnrengelman.shadow'
+
+    compileJava.options.encoding = "UTF-8"
 
     group = 'me.lorenzo0111'
     version = '1.0'
