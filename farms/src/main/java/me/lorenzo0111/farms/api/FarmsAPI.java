@@ -7,7 +7,6 @@
 
 package me.lorenzo0111.farms.api;
 
-import com.cryptomorin.xseries.XMaterial;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
 import me.lorenzo0111.farms.api.objects.FarmType;
@@ -19,7 +18,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,26 +29,26 @@ public class FarmsAPI implements IFarmsAPI {
     }
 
     @Override
-    public IFarm createFarm(Location location, Player player) {
+    public IFarm createFarm(Location location, Player owner) {
+        return createFarm(location,owner,FarmType.BLOCKS);
+    }
+
+    @Override
+    public IFarm createFarm(Location location, Player owner, FarmType type) {
         Material before = location.clone().subtract(0,1,0).getBlock().getType();
         Farm farm = plugin.getDataManager().create(new Farm(
                 location,
                 UUID.randomUUID(),
-                player.getUniqueId(),
+                owner.getUniqueId(),
                 1,
                 2,
-                FarmType.BLOCKS,
-                Material.WHEAT,
+                type,
+                null,
                 before));
 
-        StandUtils.miner(location.clone().add(0.5,0,0.5), player, farm.getUuid().toString());
+        StandUtils.miner(location.clone().add(0.5,0,0.5), owner, farm.getUuid().toString());
 
         location.getBlock().setType(Material.GOLD_BLOCK);
-        BlockUtils.near(location.getBlock(), 2).forEach(block -> {
-            if (block.getType().equals(Material.DIRT) || block.getType().equals(XMaterial.GRASS_BLOCK.parseMaterial()) || block.getType().equals(Material.AIR)) {
-                block.setType(XMaterial.FARMLAND.parseMaterial());
-            }
-        });
 
         BlockUtils.full(farm, farm.getLocation());
         return farm;
@@ -63,7 +61,7 @@ public class FarmsAPI implements IFarmsAPI {
 
     @Override
     public List<IFarm> getFarms() {
-        return new ArrayList<>(plugin.getDataManager()
-                .getFarms());
+        return plugin.getDataManager()
+                .getFarms();
     }
 }

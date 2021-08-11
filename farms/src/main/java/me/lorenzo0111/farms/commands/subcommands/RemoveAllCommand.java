@@ -7,7 +7,7 @@
 
 package me.lorenzo0111.farms.commands.subcommands;
 
-import me.lorenzo0111.farms.api.objects.Farm;
+import me.lorenzo0111.farms.api.objects.IFarm;
 import me.lorenzo0111.farms.commands.FarmsCommand;
 import me.lorenzo0111.farms.commands.SubCommand;
 import org.bukkit.ChatColor;
@@ -35,9 +35,9 @@ public class RemoveAllCommand extends SubCommand {
     @Override
     public void execute(Player player, String[] args) {
         final int count = this.getCommand().getPlugin().getDataManager().getFarms().size();
-        final List<Farm> farms = this.getCommand().getPlugin().getDataManager().getFarms();
+        final List<IFarm> farms = this.getCommand().getPlugin().getDataManager().getFarms();
 
-        for (Farm farm : farms) {
+        for (IFarm farm : farms) {
             farm.safeDestroy();
         }
 

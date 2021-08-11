@@ -32,6 +32,7 @@ public class QueueTask implements Runnable {
                 .getFarms()
                 .stream()
                 .filter(farm -> farm.getCollector() != null)
+                .map(farm -> (Farm) farm)
                 .collect(Collectors.toList());
 
         for (Farm farm : farms) {

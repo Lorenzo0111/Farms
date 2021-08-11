@@ -7,6 +7,7 @@
 
 package me.lorenzo0111.farms.api;
 
+import me.lorenzo0111.farms.api.objects.FarmType;
 import me.lorenzo0111.farms.api.objects.IFarm;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -25,6 +26,14 @@ public interface IFarmsAPI {
      * @return A new farm
      */
     IFarm createFarm(Location location, Player owner);
+
+    /**
+     * @param location Location of the minion
+     * @param owner Owner of the farm
+     * @param type Farm type
+     * @return A new farm
+     */
+    IFarm createFarm(Location location, Player owner, FarmType type);
 
     /**
      * @param block A block of the farm

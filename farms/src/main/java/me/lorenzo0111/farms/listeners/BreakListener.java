@@ -9,7 +9,7 @@ package me.lorenzo0111.farms.listeners;
 
 import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.farms.Farms;
-import me.lorenzo0111.farms.api.objects.Farm;
+import me.lorenzo0111.farms.api.objects.IFarm;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +23,7 @@ public class BreakListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onBreak(BlockBreakEvent event) {
         if (!plugin.getDataManager().contains(event.getBlock().getLocation())) {
-            Farm farm = plugin.getDataManager().find(event.getBlock());
+            IFarm farm = plugin.getDataManager().find(event.getBlock());
             if (farm != null)
                 event.setCancelled(true);
             return;

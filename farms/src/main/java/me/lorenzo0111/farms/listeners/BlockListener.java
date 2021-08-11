@@ -9,7 +9,7 @@ package me.lorenzo0111.farms.listeners;
 
 import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.farms.Farms;
-import me.lorenzo0111.farms.api.objects.Farm;
+import me.lorenzo0111.farms.api.objects.IFarm;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -23,7 +23,7 @@ public class BlockListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onBlockEdit(BlockBreakEvent event) {
-        Farm farm = plugin.getDataManager().find(event.getBlock());
+        IFarm farm = plugin.getDataManager().find(event.getBlock());
         if (farm == null)
             return;
 
@@ -32,7 +32,7 @@ public class BlockListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPhysics(BlockPhysicsEvent event) {
-        Farm farm = plugin.getDataManager().find(event.getBlock());
+        IFarm farm = plugin.getDataManager().find(event.getBlock());
         if (farm == null)
             return;
 
@@ -41,7 +41,7 @@ public class BlockListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onChange(EntityChangeBlockEvent event) {
-        Farm farm = plugin.getDataManager().find(event.getBlock());
+        IFarm farm = plugin.getDataManager().find(event.getBlock());
         if (farm == null)
             return;
 
@@ -50,7 +50,7 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void onFade(BlockFadeEvent event) {
-        Farm farm = plugin.getDataManager().find(event.getBlock());
+        IFarm farm = plugin.getDataManager().find(event.getBlock());
         if (farm == null)
             return;
 

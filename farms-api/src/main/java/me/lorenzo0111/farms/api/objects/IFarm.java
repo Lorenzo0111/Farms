@@ -23,6 +23,24 @@ public interface IFarm {
      */
     Location getLocation();
 
+
+    /**
+     * Set farm location
+     * @param location New location
+     */
+    void setLocation(Location location);
+
+    /**
+     * @return Location of the collector
+     */
+    Location getCollector();
+
+    /**
+     * Set collector location
+     * @param location New location
+     */
+    void setCollector(Location location);
+
     /**
      * @return Farm UUID
      */

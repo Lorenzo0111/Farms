@@ -13,7 +13,7 @@ import dev.triumphteam.gui.components.InteractionModifier;
 import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 import me.lorenzo0111.farms.Farms;
-import me.lorenzo0111.farms.api.objects.Farm;
+import me.lorenzo0111.farms.api.objects.IFarm;
 import me.lorenzo0111.farms.api.objects.Item;
 import me.lorenzo0111.farms.utils.SerializationUtils;
 import net.kyori.adventure.text.Component;
@@ -47,7 +47,7 @@ public class FarmsGUI extends PaginatedGui {
     public void open(@NotNull HumanEntity player) {
         this.setDefaultClickAction(e -> e.setCancelled(true));
 
-        List<Farm> farms = plugin
+        List<IFarm> farms = plugin
                 .getDataManager()
                 .getFarms()
                 .stream()
@@ -69,7 +69,7 @@ public class FarmsGUI extends PaginatedGui {
                                 Component.text("§7§oClick to remove"))
                         .build(), -1, -1));
 
-        for (Farm farm : farms) {
+        for (IFarm farm : farms) {
             ItemStack stack = item.getItem();
             ItemMeta meta = stack.getItemMeta();
 
@@ -99,7 +99,7 @@ public class FarmsGUI extends PaginatedGui {
         super.open(player);
     }
 
-    private String replace(String text, Farm farm) {
+    private String replace(String text, IFarm farm) {
         if (text == null) return null;
 
         String name = Bukkit.getOfflinePlayer(farm.getOwner()).getName();

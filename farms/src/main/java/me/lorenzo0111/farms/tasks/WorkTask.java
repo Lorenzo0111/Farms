@@ -11,6 +11,7 @@ import com.cryptomorin.xseries.XBlock;
 import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
+import me.lorenzo0111.farms.api.objects.IFarm;
 import me.lorenzo0111.farms.commands.subcommands.CreateCommand;
 import me.lorenzo0111.farms.utils.BlockUtils;
 import org.bukkit.Material;
@@ -30,7 +31,7 @@ public class WorkTask implements Runnable {
     @Override
     @SuppressWarnings("deprecation")
     public void run() {
-        Farm farm = plugin.getDataManager().get(this.farm);
+        IFarm farm = plugin.getDataManager().get(this.farm);
         if (farm == null)
             return;
 
@@ -54,10 +55,10 @@ public class WorkTask implements Runnable {
                 if (XBlock.getAge(block) != 7)
                     continue;
 
-                this.collect(farm,block);
+                this.collect((Farm) farm,block);
                 XBlock.setAge(block,0);
             } else {
-                this.collect(farm,block);
+                this.collect((Farm) farm,block);
                 block.setType(Material.AIR);
             }
 

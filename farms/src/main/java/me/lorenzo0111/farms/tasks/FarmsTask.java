@@ -10,7 +10,7 @@ package me.lorenzo0111.farms.tasks;
 import com.cryptomorin.xseries.XBlock;
 import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.farms.Farms;
-import me.lorenzo0111.farms.api.objects.Farm;
+import me.lorenzo0111.farms.api.objects.IFarm;
 import me.lorenzo0111.farms.utils.BlockUtils;
 import org.bukkit.block.Block;
 
@@ -22,9 +22,9 @@ public class FarmsTask implements Runnable {
 
     @Override
     public void run() {
-        List<Farm> farms = plugin.getDataManager().getFarms();
+        List<IFarm> farms = plugin.getDataManager().getFarms();
 
-        for (Farm farm : farms) {
+        for (IFarm farm : farms) {
             int executed = 0;
 
             for (Block block : BlockUtils.near(farm.getLocation().clone().getBlock(), farm.getRadius())) {

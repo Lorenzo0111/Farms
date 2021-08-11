@@ -9,6 +9,7 @@ package me.lorenzo0111.farms.collector;
 
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
+import me.lorenzo0111.farms.api.objects.IFarm;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -40,7 +41,7 @@ public class CollectorHandler {
     public static boolean canPerform(@NotNull Player player) {
         if (!contains(player)) return false;
 
-        Farm farm = Farms.getInstance().getDataManager().get(CREATING.get(player.getUniqueId()));
+        IFarm farm = Farms.getInstance().getDataManager().get(CREATING.get(player.getUniqueId()));
         if (farm == null) {
             Farms.getInstance().getLogger().info(player.getName() + " tried to set collector of an un-existing farm.");
             removeMember(player);
@@ -52,7 +53,7 @@ public class CollectorHandler {
 
     public static void complete(@NotNull Player player, @NotNull Block block) {
         if (!canPerform(player)) return;
-        Farm farm = Farms.getInstance().getDataManager().get(CREATING.get(player.getUniqueId()));
+        IFarm farm = Farms.getInstance().getDataManager().get(CREATING.get(player.getUniqueId()));
         if (farm == null) {
             Farms.getInstance().getLogger().info(player.getName() + " tried to set collector of an un-existing farm.");
             removeMember(player);

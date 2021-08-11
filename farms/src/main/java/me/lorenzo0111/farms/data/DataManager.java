@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
+import me.lorenzo0111.farms.api.objects.IFarm;
 import me.lorenzo0111.farms.tasks.WorkTask;
 import me.lorenzo0111.farms.utils.BlockUtils;
 import org.bukkit.Bukkit;
@@ -26,10 +27,10 @@ import java.util.UUID;
 @Getter
 public class DataManager {
     private final Farms plugin;
-    private final List<Farm> farms = new ArrayList<>();
+    private final List<IFarm> farms = new ArrayList<>();
 
     public void init() {
-        for (Farm farm : farms) {
+        for (IFarm farm : farms) {
             if (farm.getLocation() != null && !farm.getLocation().isWorldLoaded()) {
                 plugin.getLogger().warning("Farm " + farm.getUuid() + " has a location of an unloaded world. This may give some errors. Unloading farm..");
                 plugin.debug("Unloading farm " + farm.getUuid() + ". Reason: LOCATION[" + farm.getLocation().getWorld() + "]");
@@ -42,11 +43,11 @@ public class DataManager {
                 continue;
             }
 
-            if (farm.getTask() != null)
+            if (((Farm) farm).getTask() != null)
                 continue;
 
             int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new WorkTask(plugin,farm.getUuid()), 0, plugin.getConfig().getInt("tasks.collect", 10) * 20L);
-            farm.setTask(task);
+            ((Farm) farm).setTask(task);
         }
     }
 
@@ -86,21 +87,21 @@ public class DataManager {
                 .anyMatch((farm) -> farm.getUuid().equals(uuid));
     }
 
-    public @Nullable Farm get(Location location) {
+    public @Nullable IFarm get(Location location) {
         return farms.stream()
                 .filter((farm) -> farm.getLocation().equals(location))
                 .findFirst()
                 .orElse(null);
     }
 
-    public @Nullable Farm get(UUID uuid) {
+    public @Nullable IFarm get(UUID uuid) {
         return farms.stream()
                 .filter((farm) -> farm.getUuid().equals(uuid))
                 .findFirst()
                 .orElse(null);
     }
 
-    public @Nullable Farm find(Block location) {
+    public @Nullable IFarm find(Block location) {
         return farms.stream()
                 .filter((farm) -> {
                     Location posOne = BlockUtils.posOne(farm);

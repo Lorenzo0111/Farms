@@ -11,6 +11,7 @@ import dev.triumphteam.gui.guis.Gui;
 import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
+import me.lorenzo0111.farms.api.objects.IFarm;
 import me.lorenzo0111.farms.guis.FarmGUI;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.event.EventHandler;
@@ -42,7 +43,7 @@ public class InteractListener implements Listener {
         if (!plugin.getDataManager().contains(uuid))
             return;
 
-        Farm farm = plugin.getDataManager().get(uuid);
+        IFarm farm = plugin.getDataManager().get(uuid);
         if (farm == null)
             return;
 
@@ -50,7 +51,7 @@ public class InteractListener implements Listener {
             return;
         event.setCancelled(true);
 
-        Gui gui = new FarmGUI(plugin,event.getPlayer(),farm);
+        Gui gui = new FarmGUI(plugin,event.getPlayer(),(Farm) farm);
         gui.open(event.getPlayer());
     }
 }

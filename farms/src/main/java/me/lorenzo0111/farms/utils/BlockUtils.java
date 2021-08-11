@@ -7,7 +7,7 @@
 
 package me.lorenzo0111.farms.utils;
 
-import me.lorenzo0111.farms.api.objects.Farm;
+import me.lorenzo0111.farms.api.objects.IFarm;
 import org.apache.commons.lang.math.IntRange;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -36,15 +36,15 @@ public final class BlockUtils {
                 &&  new IntRange(pos1.getZ(), pos2.getZ()).containsDouble(block.getZ());
     }
 
-    public static Location posOne(Farm farm) {
+    public static Location posOne(IFarm farm) {
         return farm.getLocation().clone().add(farm.getRadius(),0,farm.getRadius());
     }
 
-    public static Location posTwo(Farm farm) {
+    public static Location posTwo(IFarm farm) {
         return farm.getLocation().clone().subtract(farm.getRadius(),1,farm.getRadius());
     }
 
-    public static void full(Farm farm) {
+    public static void full(IFarm farm) {
         Block item = farm.getLocation().getBlock();
         BlockUtils.near(item, 2).forEach(block -> {
             if (block.getType().equals(Material.AIR)) {
@@ -53,7 +53,7 @@ public final class BlockUtils {
         });
     }
 
-    public static void full(Farm farm, Material old) {
+    public static void full(IFarm farm, Material old) {
         Block item = farm.getLocation().getBlock();
         BlockUtils.near(item, 2).forEach(block -> {
             if (block.getType().equals(Material.AIR) || block.getType().equals(old)) {
@@ -62,7 +62,7 @@ public final class BlockUtils {
         });
     }
 
-    public static void full(Farm farm, Location... ignore) {
+    public static void full(IFarm farm, Location... ignore) {
         Block item = farm.getLocation().getBlock();
         List<Location> ignoreList = Arrays.asList(ignore);
         BlockUtils.near(item, 2).forEach(block -> {
