@@ -114,10 +114,8 @@ public class Farm implements ConfigurationSerializable, IFarm {
         });
         if (task != null)
             Bukkit.getScheduler().cancelTask(this.getTask());
-        for (Entity entity : location.getChunk().getEntities()) {
-            UUID uuid = StandUtils.farm(entity);
-            if (this.uuid.equals(uuid)) entity.remove();
-        }
+        Entity minion = getMinion();
+        if (minion != null) minion.remove();
     }
 
     @Override
@@ -125,6 +123,15 @@ public class Farm implements ConfigurationSerializable, IFarm {
         NBTItem item = CreateCommand.getItem();
         item.setInteger("farm_level", this.getLevel());
         player.getInventory().addItem(item.getItem());
+    }
+
+    public Entity getMinion() {
+        for (Entity entity : location.getChunk().getEntities()) {
+            UUID uuid = StandUtils.farm(entity);
+            if (this.uuid.equals(uuid)) return entity;
+        }
+
+        return null;
     }
 
     @Override

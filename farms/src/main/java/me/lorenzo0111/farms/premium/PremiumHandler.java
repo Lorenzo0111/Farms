@@ -28,8 +28,12 @@ public final class PremiumHandler {
     }
 
     @Contract(pure = true)
+    public static @NotNull String isSongoda() {
+        return "%%__SONGODA__%%";
+    }
+
     public static @NotNull String formatUserURL() {
-        return "https://www.spigotmc.org/members/" + getUserID();
+        return isSongoda().equals("true") ? "https://songoda.com/profile/" + "%%__USERNAME__%%" : "https://www.spigotmc.org/members/" + getUserID();
     }
 
     public static boolean isPremium() {
