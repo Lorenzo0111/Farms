@@ -5,6 +5,6 @@
  * -------------------------------------
  */
 
-rootProject.name = 'farms'
+rootProject.name = 'Farms'
 
 include(':farms',':farms-api')

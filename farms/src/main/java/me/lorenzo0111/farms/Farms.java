@@ -18,6 +18,7 @@ import me.lorenzo0111.farms.data.DataManager;
 import me.lorenzo0111.farms.hooks.VaultHook;
 import me.lorenzo0111.farms.hooks.WorldGuardHook;
 import me.lorenzo0111.farms.premium.PremiumHandler;
+import me.lorenzo0111.farms.premium.UpdateChecker;
 import me.lorenzo0111.farms.tasks.FarmsTask;
 import me.lorenzo0111.farms.tasks.QueueTask;
 import me.lorenzo0111.farms.tasks.SaveTask;
@@ -58,6 +59,7 @@ public final class Farms extends JavaPlugin {
     private FileConfiguration guiConfig;
 
     @Getter private static Farms instance;
+    @Getter private UpdateChecker updater;
 
     @Override
     public void onLoad() {
@@ -145,6 +147,8 @@ public final class Farms extends JavaPlugin {
 
         new Metrics(this, 12310)
                 .addCustomChart(new SingleLineChart("farms", () -> dataManager.getFarms().size()));
+
+        this.updater = new UpdateChecker(this,94931);
 
         ms = System.currentTimeMillis() - ms;
         this.getLogger().info(getName() + " v" + getDescription().getVersion() + " enabled in " + ms + "ms.");
