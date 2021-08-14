@@ -54,6 +54,7 @@ public class PlaceListener implements Listener {
         event.getBlock().setType(Material.AIR);
 
         int level = compound.getInteger("farm_level");
+        FarmType type = FarmType.valueOf(compound.getString("farm_type"));
 
         Location location = event.getBlock().getLocation().subtract(0,1,0);
         Material before = location.getBlock().getType();
@@ -63,20 +64,22 @@ public class PlaceListener implements Listener {
                 event.getPlayer().getUniqueId(),
                 level,
                 2,
-                FarmType.BLOCKS,
+                type,
                 Material.WHEAT,
                 before));
 
         StandUtils.miner(event.getBlock().getLocation().clone().add(0.5,0,0.5), event.getPlayer(), farm.getUuid().toString());
 
         location.getBlock().setType(Material.GOLD_BLOCK);
-        BlockUtils.near(location.getBlock(), 2).forEach(block -> {
-            if (block.getType().equals(Material.DIRT) || block.getType().equals(XMaterial.GRASS_BLOCK.parseMaterial()) || block.getType().equals(Material.AIR)) {
-                block.setType(XMaterial.FARMLAND.parseMaterial());
-            }
-        });
+        if (farm.getType().place()) {
+            BlockUtils.near(location.getBlock(), 2).forEach(block -> {
+                if (block.getType().equals(Material.DIRT) || block.getType().equals(XMaterial.GRASS_BLOCK.parseMaterial()) || block.getType().equals(Material.AIR)) {
+                    block.setType(XMaterial.FARMLAND.parseMaterial());
+                }
+            });
 
-        BlockUtils.full(farm, farm.getLocation());
+            BlockUtils.full(farm, farm.getLocation());
+        }
 
         event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("prefix") + plugin.getMessages().getString("setup.created")));
     }

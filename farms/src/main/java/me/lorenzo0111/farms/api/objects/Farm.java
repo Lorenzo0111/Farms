@@ -23,6 +23,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,10 +109,12 @@ public class Farm implements ConfigurationSerializable, IFarm {
     @Override
     public void safeDestroy() {
         location.getBlock().setType(Material.AIR);
-        BlockUtils.near(location.clone().subtract(0,1,0).getBlock(), radius).forEach((block) -> {
-            if (block.getType().equals(XMaterial.FARMLAND.parseMaterial()) || block.getType().equals(Material.GOLD_BLOCK))
-                block.setType(Material.AIR);
-        });
+        if (this.getType().place()) {
+            BlockUtils.near(location.clone().subtract(0,1,0).getBlock(), radius).forEach((block) -> {
+                if (block.getType().equals(XMaterial.FARMLAND.parseMaterial()) || block.getType().equals(Material.GOLD_BLOCK))
+                    block.setType(Material.AIR);
+            });
+        }
         if (task != null)
             Bukkit.getScheduler().cancelTask(this.getTask());
         Entity minion = getMinion();
@@ -122,10 +125,11 @@ public class Farm implements ConfigurationSerializable, IFarm {
     public void pickup(@NotNull HumanEntity player) {
         NBTItem item = CreateCommand.getItem();
         item.setInteger("farm_level", this.getLevel());
+        item.setString("farm_type", this.getType().name());
         player.getInventory().addItem(item.getItem());
     }
 
-    public Entity getMinion() {
+    public @Nullable Entity getMinion() {
         for (Entity entity : location.getChunk().getEntities()) {
             UUID uuid = StandUtils.farm(entity);
             if (this.uuid.equals(uuid)) return entity;

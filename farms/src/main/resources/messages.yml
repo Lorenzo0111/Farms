@@ -9,6 +9,7 @@ no-permission: "&cYou do not have the permission to execute this command."
 commands:
   no-money: "&cYou don't have enough money to buy a farm."
   not-found: "&cCommand not found. Run /farms help for a commands list."
+  no-type: "&cThis farm type does not exist."
   help: "
   &8&m===========&e Farms Help &8&m===========&e\n
       &6&l• &e/farms create &8» &7Create a farm

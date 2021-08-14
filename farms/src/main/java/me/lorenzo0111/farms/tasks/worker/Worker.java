@@ -23,11 +23,11 @@ public interface Worker {
 
     default void collect(Farm farm, Block block) {
         Collection<ItemStack> drops = block.getDrops(new ItemStack(Material.DIAMOND_PICKAXE));
-        Farms.getInstance().debug("Collecting " + drops + " from " + block.getType() + "...");
         this.collect(farm, drops);
     }
 
     default void collect(Farm farm, Collection<ItemStack> drops) {
+        Farms.getInstance().debug("Collecting " + drops.size() + " drops..");
         List<ItemStack> items = farm.getItems();
         items.addAll(drops);
         farm.setItems(items);

@@ -77,6 +77,7 @@ public interface IFarm {
     void destroy();
     /**
      * Remove the farm without deleting it from the database.
+     * It will be placed again on the next startup
      */
     void safeDestroy();
 

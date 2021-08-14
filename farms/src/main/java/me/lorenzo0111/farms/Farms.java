@@ -27,12 +27,14 @@ import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,6 +47,9 @@ public final class Farms extends JavaPlugin {
     private File dataFile;
     private FileConfiguration data;
     private DataManager dataManager;
+
+    private File configFile;
+    private UpdatingConfig config;
 
     private File messagesFile;
     private UpdatingConfig messages;
@@ -85,41 +90,21 @@ public final class Farms extends JavaPlugin {
             data = YamlConfiguration.loadConfiguration(dataFile);
             dataManager = new DataManager(this);
 
+            this.configFile = new File(this.getDataFolder(), "config.yml");
+            this.extract(configFile);
+            this.config = new UpdatingConfig(configFile);
+
             this.messagesFile = new File(this.getDataFolder(), "messages.yml");
-
-            if (!messagesFile.exists()) {
-                try (InputStream in = this.getClass().getClassLoader().getResourceAsStream("messages.yml")) {
-                    Objects.requireNonNull(in);
-
-                    Files.copy(in, messagesFile.toPath());
-                } catch (IOException e) {
-                    this.getLogger().severe("Unable to create messages.yml file. Disabling..");
-                    e.printStackTrace();
-                    Bukkit.getPluginManager().disablePlugin(this);
-                    return;
-                }
-            }
+            this.extract(messagesFile);
 
             this.guiFile = new File(this.getDataFolder(), "gui.yml");
-
-            if (!guiFile.exists()) {
-                try (InputStream in = this.getClass().getClassLoader().getResourceAsStream("gui.yml")) {
-                    Objects.requireNonNull(in);
-
-                    Files.copy(in, guiFile.toPath());
-                } catch (IOException e) {
-                    this.getLogger().severe("Unable to create gui.yml file. Disabling..");
-                    e.printStackTrace();
-                    Bukkit.getPluginManager().disablePlugin(this);
-                    return;
-                }
-            }
+            this.extract(guiFile);
 
             dataManager.reload();
             dataManager.init();
             this.reload();
 
-        } catch (IOException e) {
+        } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
 
@@ -164,7 +149,7 @@ public final class Farms extends JavaPlugin {
         ms = System.currentTimeMillis() - ms;
         this.getLogger().info(getName() + " v" + getDescription().getVersion() + " enabled in " + ms + "ms.");
 
-        if (PremiumHandler.isPremium()) this.getLogger().warning("This resource seems to be cracked. Please do not crack resources.");
+        if (!PremiumHandler.isPremium()) this.getLogger().warning("This resource seems to be cracked. Please do not crack resources.");
         else this.getLogger().info("Welcome back. Thanks for buying the plugin. User ID: " + PremiumHandler.getUserID());
     }
 
@@ -179,10 +164,13 @@ public final class Farms extends JavaPlugin {
         dataManager.save(false);
         this.reloadData();
 
-        messages = new UpdatingConfig(messagesFile,null);
+        try {
+            messages = new UpdatingConfig(messagesFile);
+            config = new UpdatingConfig(configFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
         guiConfig = YamlConfiguration.loadConfiguration(guiFile);
-
-        this.reloadConfig();
     }
 
     public void reloadData() {
@@ -192,6 +180,26 @@ public final class Farms extends JavaPlugin {
             dataManager.reload();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @NotNull
+    @Override
+    public UpdatingConfig getConfig() {
+        return config;
+    }
+
+    private void extract(@NotNull File file) {
+        if (!file.exists()) {
+            try (InputStream in = this.getClass().getClassLoader().getResourceAsStream(file.getName())) {
+                Objects.requireNonNull(in);
+
+                Files.copy(in, file.toPath());
+            } catch (IOException e) {
+                this.getLogger().severe("Unable to create " + file.getName() + " file. Disabling..");
+                e.printStackTrace();
+                Bukkit.getPluginManager().disablePlugin(this);
+            }
         }
     }
 

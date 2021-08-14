@@ -127,10 +127,12 @@ public class FarmGUI extends Gui {
             }
             farm.getItems().clear();
         }));
-        this.setItem(type.getRow(),type.getColumn(), ItemBuilder.from(type.getItem()).asGuiItem(e -> {
-            e.getWhoClicked().closeInventory();
-            new TypeGUI(farm,plugin).open(player);
-        }));
+        if (farm.getType().place()) {
+            this.setItem(type.getRow(),type.getColumn(), ItemBuilder.from(type.getItem()).asGuiItem(e -> {
+                e.getWhoClicked().closeInventory();
+                new TypeGUI(farm,plugin).open(player);
+            }));
+        }
         this.setItem(collector.getRow(),collector.getColumn(), ItemBuilder.from(collector.getItem()).asGuiItem(e -> {
             e.getWhoClicked().closeInventory();
             CollectorHandler.addMember((Player) e.getWhoClicked(), farm);

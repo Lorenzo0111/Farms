@@ -10,62 +10,64 @@ package me.lorenzo0111.farms.config;
 import com.google.common.base.Charsets;
 import me.lorenzo0111.farms.Farms;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Objects;
 
-public class UpdatingConfig {
+public class UpdatingConfig extends YamlConfiguration {
     private final File file;
-    private final FileConfiguration configuration;
 
-    public UpdatingConfig(@NotNull File file, @Nullable FileConfiguration configuration) {
+    public UpdatingConfig(@NotNull File file) throws IOException, InvalidConfigurationException {
+        super();
         this.file = file;
-        this.configuration = configuration == null ? YamlConfiguration.loadConfiguration(file) : configuration;
 
-        try(InputStream stream = this.getClass().getClassLoader().getResourceAsStream(file.getName())) {
-            if (stream == null) {
-                Farms.getInstance().getLogger().info("[UpdatingConfig] Unable to create a stream for " + file.getName() + ".");
-                return;
-            }
-
-            Reader reader = new InputStreamReader(stream, Charsets.UTF_8);
-            this.configuration.setDefaults(YamlConfiguration.loadConfiguration(reader));
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        final InputStream defConfigStream = Farms.getInstance().getResource(file.getName());
+        if (defConfigStream == null) {
+            return;
         }
+
+        InputStreamReader inputStreamReader = new InputStreamReader(defConfigStream, Charsets.UTF_8);
+
+        this.setDefaults(loadConfiguration(inputStreamReader));
+        defConfigStream.close();
+        inputStreamReader.close();
     }
 
-    public String getString(String path) {
-        Configuration defaults = configuration.getDefaults();
+    @Override
+    public String getString(@NotNull String path) {
+        return (String) get(path);
+    }
+
+    @Override
+    public int getInt(@NotNull String path) {
+        return (int) this.get(path);
+    }
+
+    @Override
+    public @NotNull Object get(@NotNull String path) {
+        Configuration defaults = this.getDefaults();
 
         Objects.requireNonNull(defaults);
 
-        if (!configuration.contains(path, true) && defaults.contains(path)) {
-            configuration.set(path, configuration.getDefaults().get(path));
+        if (!this.contains(path, true) && defaults.contains(path)) {
+            this.set(path, this.getDefaults().get(path));
             this.save();
         }
 
-        return configuration.getString(path);
+        return super.get(path, "");
     }
 
     private void save() {
         try {
-            configuration.save(file);
+            this.save(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public FileConfiguration getConfiguration() {
-        return configuration;
     }
 }

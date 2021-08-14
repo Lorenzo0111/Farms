@@ -9,14 +9,13 @@ package me.lorenzo0111.farms.commands.subcommands;
 
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import me.lorenzo0111.farms.Farms;
+import me.lorenzo0111.farms.api.objects.FarmType;
 import me.lorenzo0111.farms.commands.FarmsCommand;
 import me.lorenzo0111.farms.commands.SubCommand;
 import me.lorenzo0111.farms.hooks.VaultHook;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -42,26 +41,27 @@ public class CreateCommand extends SubCommand {
 
     @Override
     public void execute(@NotNull Player player, String[] args) {
-        Player target = player;
+        FarmType type = FarmType.BLOCKS;
+        if (args.length == 2) {
+            try {
+                type = FarmType.valueOf(args[1].toUpperCase());
+            } catch (IllegalArgumentException ignored) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getCommand().getPlugin().getMessages().getString("prefix") + this.getCommand().getPlugin().getMessages().getString("commands.no-type")));
+                return;
+            }
+        }
 
-        if (args.length == 2 && player.hasPermission(""))
-            target = Bukkit.getPlayer(args[1]);
-
-        if (target == null) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', getCommand().getPlugin().getMessages().getString("prefix") + getCommand().getPlugin().getMessages().getString("not-found")));
+        if (!VaultHook.withdraw(player,getCommand().getPlugin().getConfig().getDouble("vault.prices." + type.name()))) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getCommand().getPlugin().getMessages().getString("prefix") + this.getCommand().getPlugin().getMessages().getString("commands.no-money")));
             return;
         }
 
-        if (target.equals(player) && !VaultHook.withdraw(player,getCommand().getPlugin().getConfig().getDouble("vault.price"))) {
-            target.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getCommand().getPlugin().getMessages().getString("prefix") + this.getCommand().getPlugin().getMessages().getString("commands.no-money")));
-            return;
-        }
-
-        target.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getCommand().getPlugin().getMessages().getString("prefix") + this.getCommand().getPlugin().getMessages().getString("commands.setup")));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getCommand().getPlugin().getMessages().getString("prefix") + this.getCommand().getPlugin().getMessages().getString("commands.setup")));
 
         NBTItem item = getItem();
         item.setInteger("farm_level", 1);
-        target.getInventory().addItem(item.getItem());
+        item.setString("farm_type", type.name());
+        player.getInventory().addItem(item.getItem());
     }
 
     public static NBTItem getItem() {

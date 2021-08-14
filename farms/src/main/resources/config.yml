@@ -2,7 +2,9 @@ debug: false
 
 vault:
   enabled: true
-  price: 1
+  prices:
+    BLOCKS: 10
+    DROPS: 10
   # The math expression will be newLevel * levelUp
   # For example if you set to 100 the levelUp price to level 5 will be 500
   levelUp: 100

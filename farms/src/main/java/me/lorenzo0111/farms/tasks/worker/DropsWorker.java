@@ -14,7 +14,6 @@ import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,31 +21,34 @@ public class DropsWorker implements Worker {
 
     @Override
     public void work(DataManager manager, Farm farm) {
-        Entity minion = farm.getMinion();
+        try {
+            Entity minion = farm.getMinion();
 
-        if (minion == null) return;
+            if (minion == null) return;
 
-        int can = farm.getLevel() * 2;
-        List<ItemStack> collected = new ArrayList<>();
+            int can = farm.getLevel() * 2;
+            List<ItemStack> collected = new ArrayList<>();
 
-        final List<Entity> nearbyEntities = new ArrayList<>(minion.getNearbyEntities(farm.getRadius(), 3, farm.getRadius()));
-        List<Entity> collect = nearbyEntities.stream()
-                .filter(entity -> entity instanceof Item)
-                .collect(Collectors.toList());
+            final List<Entity> nearbyEntities = new ArrayList<>(minion.getNearbyEntities(farm.getRadius(), 3, farm.getRadius()));
+            List<Entity> collect = nearbyEntities.stream()
+                    .filter(entity -> entity instanceof Item)
+                    .collect(Collectors.toList());
 
-        for (Entity entity : collect) {
-            if (can >= collected.size()) {
-                return;
+            for (Entity entity : collect) {
+                if (collected.size() >= can) {
+                    return;
+                }
+
+                Item item = (Item) entity;
+
+                collected.add(item.getItemStack());
+                item.remove();
             }
 
-            Item item = (Item) entity;
-
-            collected.add(item.getItemStack());
-            item.remove();
+            this.collect(farm, collected);
+        } catch (Exception | Error e) {
+            e.printStackTrace();
         }
-
-        this.collect(farm, collected);
-
     }
 
     @Override
