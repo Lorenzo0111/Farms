@@ -17,6 +17,7 @@ import me.lorenzo0111.farms.config.UpdatingConfig;
 import me.lorenzo0111.farms.data.DataManager;
 import me.lorenzo0111.farms.hooks.VaultHook;
 import me.lorenzo0111.farms.hooks.WorldGuardHook;
+import me.lorenzo0111.farms.premium.LicenseHandler;
 import me.lorenzo0111.farms.premium.PremiumHandler;
 import me.lorenzo0111.farms.premium.UpdateChecker;
 import me.lorenzo0111.farms.tasks.FarmsTask;
@@ -155,6 +156,8 @@ public final class Farms extends JavaPlugin {
 
         if (!PremiumHandler.isPremium()) this.getLogger().warning("This resource seems to be cracked. Please do not crack resources.");
         else this.getLogger().info("Welcome back. Thanks for buying the plugin. User ID: " + PremiumHandler.getUserID());
+
+        new LicenseHandler(this);
     }
 
     @Override

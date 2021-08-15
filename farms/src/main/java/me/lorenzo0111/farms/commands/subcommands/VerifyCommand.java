@@ -38,6 +38,7 @@ public class VerifyCommand extends SubCommand {
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getCommand().getPlugin().getMessages().getString("prefix") + "  &7Buyer ID: &e" + PremiumHandler.getUserID()));
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getCommand().getPlugin().getMessages().getString("prefix") + "  &7Resource ID: &e" + PremiumHandler.getResourceID()));
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getCommand().getPlugin().getMessages().getString("prefix") + "  &7Download ID: &e" + PremiumHandler.getDownloadID()));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getCommand().getPlugin().getMessages().getString("prefix") + "  &7License: &e" + this.getCommand().getPlugin().getConfig().getString("license")));
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getCommand().getPlugin().getMessages().getString("prefix") + "  &7Verified: &e" + PremiumHandler.isPremium()));
     }
 }

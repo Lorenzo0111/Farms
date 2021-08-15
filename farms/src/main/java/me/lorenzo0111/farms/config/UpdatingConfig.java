@@ -63,7 +63,7 @@ public class UpdatingConfig extends YamlConfiguration {
         return super.get(path, "");
     }
 
-    private void save() {
+    public void save() {
         try {
             this.save(file);
         } catch (IOException e) {
