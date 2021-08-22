@@ -4,6 +4,7 @@
  * https://github.com/Lorenzo0111
  * -------------------------------------
  */
+apply plugin: 'com.github.johnrengelman.shadow'
 
 import org.apache.tools.ant.filters.ReplaceTokens
 
@@ -26,7 +27,7 @@ repositories {
 dependencies {
     compileOnly "com.sk89q.worldguard:worldguard-bukkit:7.0.0"
     compileOnly "com.github.MilkBowl:VaultAPI:1.7"
-    compileOnly "org.jetbrains:annotations:21.0.1"
+    compileOnly "org.jetbrains:annotations:22.0.0"
     compileOnly "org.projectlombok:lombok:1.18.20"
     annotationProcessor "org.projectlombok:lombok:1.18.20"
 
@@ -59,8 +60,10 @@ shadowJar {
     relocate("de.tr7zw.changeme.nbtapi","me.lorenzo0111.farms.libs.nbt")
     relocate("dev.triumphteam.gui", "me.lorenzo0111.farms.gui")
     relocate("net.kyori.examination","me.lorenzo0111.farms.libs.examination")
+    relocate("net.kyori.adventure","me.lorenzo0111.farms.libs.adventure")
     relocate("com.cryptomorin.xseries","me.lorenzo0111.farms.libs.xseries")
     relocate("org.reflections","me.lorenzo0111.farms.libs.reflections")
+    relocate("javassist","me.lorenzo0111.farms.libs.javassist")
 }
 
 processResources {
