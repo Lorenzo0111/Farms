@@ -17,13 +17,13 @@ import me.lorenzo0111.farms.config.UpdatingConfig;
 import me.lorenzo0111.farms.data.DataManager;
 import me.lorenzo0111.farms.hooks.VaultHook;
 import me.lorenzo0111.farms.hooks.WorldGuardHook;
+import me.lorenzo0111.farms.listeners.*;
 import me.lorenzo0111.farms.premium.LicenseHandler;
 import me.lorenzo0111.farms.premium.PremiumHandler;
 import me.lorenzo0111.farms.premium.UpdateChecker;
 import me.lorenzo0111.farms.tasks.FarmsTask;
 import me.lorenzo0111.farms.tasks.QueueTask;
 import me.lorenzo0111.farms.tasks.SaveTask;
-import me.lorenzo0111.farms.utils.ReflectionHandler;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
@@ -33,7 +33,6 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -115,9 +114,13 @@ public final class Farms extends JavaPlugin {
 
         this.getLogger().info("Registering listeners...");
 
-        ReflectionHandler.with(this.getClass().getPackage().getName()+".listeners", Listener.class, Farms.class)
-            .build(this)
-            .forEach((listener) -> Bukkit.getPluginManager().registerEvents(listener,this));
+        Bukkit.getPluginManager().registerEvents(new BlockListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new BreakListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new CollectorListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new DamageListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new InteractListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new JoinListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlaceListener(this), this);
 
         this.getLogger().info("Looking for Vault..");
         if (VaultHook.init(this)) {
