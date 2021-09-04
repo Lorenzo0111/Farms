@@ -53,6 +53,8 @@ public class LicenseHandler implements Runnable {
                 String license = json.get("license").getAsString();
                 plugin.getConfig().set("license", license);
                 plugin.getConfig().save();
+
+                plugin.getLogger().info("Retrieved a license from the license server: " + license);
             }
         } catch (Exception ignored) {}
     }

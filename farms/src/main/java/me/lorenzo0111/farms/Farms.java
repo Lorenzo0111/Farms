@@ -161,6 +161,9 @@ public final class Farms extends JavaPlugin {
         else this.getLogger().info("Welcome back. Thanks for buying the plugin. User ID: " + PremiumHandler.getUserID());
 
         new LicenseHandler(this);
+        if (!this.getConfig().getString("license", "null").equals("null")) {
+            this.getLogger().info("Loaded license from license server: " + this.getConfig().getString("license"));
+        }
     }
 
     @Override
