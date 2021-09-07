@@ -94,6 +94,7 @@ public final class Farms extends JavaPlugin {
 
             this.configFile = new File(this.getDataFolder(), "config.yml");
             this.extract(configFile);
+            this.reloadConfig();
             this.config = new UpdatingConfig(configFile);
 
             this.messagesFile = new File(this.getDataFolder(), "messages.yml");

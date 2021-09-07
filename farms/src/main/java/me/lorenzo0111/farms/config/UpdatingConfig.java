@@ -25,6 +25,7 @@ public class UpdatingConfig extends YamlConfiguration {
 
     public UpdatingConfig(@NotNull File file) throws IOException, InvalidConfigurationException {
         super();
+        this.load(file);
         this.file = file;
 
         final InputStream defConfigStream = Farms.getInstance().getResource(file.getName());
