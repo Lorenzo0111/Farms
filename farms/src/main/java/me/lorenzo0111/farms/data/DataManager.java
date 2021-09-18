@@ -31,18 +31,6 @@ public class DataManager {
 
     public void init() {
         for (IFarm farm : farms) {
-            if (farm.getLocation() != null && !farm.getLocation().isWorldLoaded()) {
-                plugin.getLogger().warning("Farm " + farm.getUuid() + " has a location of an unloaded world. This may give some errors. Unloading farm..");
-                plugin.debug("Unloading farm " + farm.getUuid() + ". Reason: LOCATION[" + farm.getLocation().getWorld() + "]");
-                continue;
-            }
-
-            if (farm.getCollector() != null && !farm.getCollector().isWorldLoaded()) {
-                plugin.getLogger().warning("Farm " + farm.getUuid() + " has a collector location of an unloaded world. This may give some errors.");
-                plugin.debug("Unloading farm " + farm.getUuid() + ". Reason: COLLECT_LOCATION[" + farm.getLocation().getWorld() + "]");
-                continue;
-            }
-
             if (((Farm) farm).getTask() != null)
                 continue;
 
