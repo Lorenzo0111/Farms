@@ -23,7 +23,7 @@ public class LicenseHandler implements Runnable {
 
     public LicenseHandler(Farms plugin) {
         this.plugin = plugin;
-        if (PremiumHandler.isPremium() && "null".equals(plugin.getConfig().getString("license"))) {
+        if (PremiumHandler.isPremium() && "null".equals(plugin.getConfig().getString("license", "null"))) {
             Bukkit.getScheduler().runTaskAsynchronously(plugin,this);
         }
     }
