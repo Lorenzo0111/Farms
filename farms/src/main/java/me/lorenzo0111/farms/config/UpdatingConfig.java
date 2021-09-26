@@ -51,6 +51,11 @@ public class UpdatingConfig extends YamlConfiguration {
     }
 
     @Override
+    public double getDouble(@NotNull String path) {
+        return (double) this.get(path);
+    }
+
+    @Override
     public @NotNull Object get(@NotNull String path) {
         Configuration defaults = this.getDefaults();
 

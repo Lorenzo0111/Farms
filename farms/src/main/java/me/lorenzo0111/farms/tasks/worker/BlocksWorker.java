@@ -16,6 +16,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.material.Crops;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BlocksWorker implements Worker {
 
     @SuppressWarnings("deprecation")
@@ -24,34 +27,42 @@ public class BlocksWorker implements Worker {
         if (farm == null)
             return;
 
-        int canBreak = farm.getLevel() * 2;
-        int broke = 0;
+        List<Block> willBreak = new ArrayList<>();
+        List<Block> willChange = new ArrayList<>();
 
-        for (Block block : BlockUtils.near(farm.getLocation().getBlock(), farm.getRadius())) {
-            if (broke >= canBreak)
-                return;
-
+        for (final Block block : BlockUtils.near(farm.getLocation().getBlock(), farm.getRadius())) {
             if (!block.getType().equals(farm.getBlock()) && !block.getLocation().equals(farm.getLocation())) {
-                block.setType(farm.getBlock());
-                broke++;
+                willChange.add(block);
                 continue;
             }
 
             if (block.getType().equals(CreateCommand.getItem().getItem().getType()))
                 continue;
 
-            if (block.getState().getData() instanceof Crops) {
-                if (XBlock.getAge(block) != 7)
-                    continue;
-
-                this.collect(farm,block);
-                XBlock.setAge(block,0);
-            } else {
-                this.collect(farm,block);
-                block.setType(Material.AIR);
+            if (block.getState().getData() instanceof Crops && XBlock.getAge(block) != 7) {
+                continue;
             }
 
-            broke++;
+            willBreak.add(block);
+        }
+
+        final int size = willBreak.size() + willChange.size();
+        final double canDo = Math.floor(manager.getPlugin().getConfig().getDouble("levels." + farm.getLevel()) / 100 * size);
+        int done = 0;
+
+        for (final Block block : willBreak) {
+            if (canDo <= done) break;
+
+            this.collect(farm,block);
+            block.setType(Material.AIR);
+            done++;
+        }
+
+        for (final Block block : willChange) {
+            if (canDo <= done) break;
+
+            block.setType(farm.getBlock());
+            done++;
         }
     }
 

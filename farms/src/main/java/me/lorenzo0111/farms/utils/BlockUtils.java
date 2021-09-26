@@ -19,7 +19,7 @@ import java.util.List;
 
 public final class BlockUtils {
 
-    public static ArrayList<Block> near(Block center, int radius) {
+    public static List<Block> near(Block center, int radius) {
         ArrayList<Block> blocks = new ArrayList<>();
         for(double x = center.getLocation().getX() - radius; x <= center.getLocation().getX() + radius; x++){
             for(double z = center.getLocation().getZ() - radius; z <= center.getLocation().getZ() + radius; z++){

@@ -23,6 +23,16 @@ items:
   CARROT: "CARROTS"
   IRON_ORE: "IRON_ORE"
 
+# Percent for each level of how many blocks should it break
+# You can't add or remove levels
+# Example: There are 7 blocks to mine, it will mine only the 15% of them at level 1
+levels:
+  1: 15.0
+  2: 20.0
+  3: 35.0
+  4: 40.0
+  5: 50.0
+
 # Time in seconds of each task
 tasks:
   grow: 5
