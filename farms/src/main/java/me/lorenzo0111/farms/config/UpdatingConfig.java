@@ -69,6 +69,16 @@ public class UpdatingConfig extends YamlConfiguration {
         return super.get(path, "");
     }
 
+    @Override
+    public boolean contains(@NotNull String path) {
+        return super.contains(path);
+    }
+
+    @Override
+    public boolean contains(@NotNull String path, boolean ignoreDefault) {
+        return super.contains(path, ignoreDefault);
+    }
+
     public void save() {
         try {
             this.save(file);
