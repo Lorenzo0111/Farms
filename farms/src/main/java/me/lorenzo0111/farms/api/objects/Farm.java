@@ -68,6 +68,9 @@ public class Farm implements ConfigurationSerializable, IFarm {
         this.before = before;
     }
 
+    /**
+     * @param data Deserialization data
+     */
     public Farm(@NotNull Map<String,Object> data) {
         this(
                 (Location) data.get("location"),

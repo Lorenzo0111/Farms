@@ -9,15 +9,18 @@ package me.lorenzo0111.farms.api;
 
 import me.lorenzo0111.farms.api.objects.FarmType;
 import me.lorenzo0111.farms.api.objects.IFarm;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.ServicesManager;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 /**
  * Interface for the FarmsAPI
+ * You can retrieve it via the {@link ServicesManager#load(Class)} method of {@link Bukkit#getServicesManager()}
  */
 public interface IFarmsAPI {
     /**
