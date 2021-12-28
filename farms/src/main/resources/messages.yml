@@ -16,8 +16,7 @@ commands:
   "
   no-args: "
   &8&m===========&e Farms v%version% &8&m===========&e\n
-      &eAuthor &6&l• &e%author%\n
-      &eLicensed &6&l• &e%license%
+      &eAuthor &6&l• &e%author%
   "
   reload: "&7Plugin reloaded in &e&n%ms%&ems&7."
   setup: "&7Now place the farm item."

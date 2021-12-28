@@ -5,7 +5,7 @@
  * -------------------------------------
  */
 
-package me.lorenzo0111.farms.premium;
+package me.lorenzo0111.farms.spigot;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +23,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 /**
- * Hangar Update Checker
+ * Spigot Update Checker
  */
 @SuppressWarnings("unused")
 public class UpdateChecker {

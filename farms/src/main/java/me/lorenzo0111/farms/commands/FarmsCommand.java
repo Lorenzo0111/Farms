@@ -10,7 +10,6 @@ package me.lorenzo0111.farms.commands;
 import lombok.Getter;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.commands.subcommands.*;
-import me.lorenzo0111.farms.premium.PremiumHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,7 +36,6 @@ public class FarmsCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new HelpCommand(this));
         subCommands.add(new ReloadCommand(this));
         subCommands.add(new RemoveAllCommand(this));
-        subCommands.add(new VerifyCommand(this));
     }
 
     @Override
@@ -63,7 +61,7 @@ public class FarmsCommand implements CommandExecutor, TabExecutor {
 
         if (args.length == 0) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("commands.no-args", "")
-                    .replace("%author%", "Lorenzo0111").replace("%license%", PremiumHandler.formatUserURL())
+                    .replace("%author%", "Lorenzo0111")
                     .replace("%version%", plugin.getDescription().getVersion())));
             return true;
         }
