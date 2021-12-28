@@ -75,6 +75,7 @@ public final class Farms extends JavaPlugin {
         this.saveDefaultConfig();
 
         this.getLogger().info("Loading NBTAPI..");
+        MinecraftVersion.disableUpdateCheck();
         MinecraftVersion.getVersion();
 
         this.getLogger().info("Loading existing farms..");
