@@ -152,7 +152,7 @@ public final class Farms extends JavaPlugin {
         new Metrics(this, 12310)
                 .addCustomChart(new SingleLineChart("farms", () -> dataManager.getFarms().size()));
 
-        this.updater = new UpdateChecker(this,94931);
+        this.updater = new UpdateChecker(this,98747);
 
         ms = System.currentTimeMillis() - ms;
         this.getLogger().info(getName() + " v" + getDescription().getVersion() + " enabled in " + ms + "ms.");
