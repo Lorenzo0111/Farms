@@ -37,9 +37,13 @@ public class FileDownloader {
     }
 
     public boolean download(File directory, @NotNull String name) {
+        return download(directory, name, false);
+    }
+
+    public boolean download(File directory, @NotNull String name, boolean overwrite) {
         File file = new File(directory, name);
 
-        if (file.exists()) {
+        if (file.exists() && (!overwrite || !file.delete())) {
             log(Level.INFO, "File already exists: " + file.getAbsolutePath(), null);
             return false;
         }

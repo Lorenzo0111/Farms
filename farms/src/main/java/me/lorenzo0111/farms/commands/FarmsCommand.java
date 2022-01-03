@@ -36,6 +36,7 @@ public class FarmsCommand implements CommandExecutor, TabExecutor {
         subCommands.add(new HelpCommand(this));
         subCommands.add(new ReloadCommand(this));
         subCommands.add(new RemoveAllCommand(this));
+        subCommands.add(new DownloadLootsCommand(this));
     }
 
     @Override

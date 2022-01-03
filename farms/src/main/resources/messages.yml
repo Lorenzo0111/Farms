@@ -19,6 +19,7 @@ commands:
       &eAuthor &6&l• &e%author%
   "
   reload: "&7Plugin reloaded in &e&n%ms%&ems&7."
+  download: "&7Loots file downloaded and updated in &e&n%ms%&ems&7."
   setup: "&7Now place the farm item."
   remove-all: "&7Destroyed &e&n%count%&7 farms."
   gui: "&6&l»&e&l» &7Farms &e&l«&6&l«"
