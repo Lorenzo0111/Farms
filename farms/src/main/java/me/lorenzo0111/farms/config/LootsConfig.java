@@ -49,6 +49,7 @@ public class LootsConfig {
         loots = new HashMap<>();
         config = YamlConfiguration.loadConfiguration(file);
         config.set("data.version", Farms.getInstance().getDescription().getVersion());
+        this.save();
         for (String key : config.getKeys(false)) {
             try {
                 EntityType type = EntityType.valueOf(key);
@@ -66,5 +67,11 @@ public class LootsConfig {
             } catch (Exception ignored) {}
 
         }
+    }
+
+    public void save() {
+        try {
+            config.save(file);
+        } catch (Exception ignored) {}
     }
 }
