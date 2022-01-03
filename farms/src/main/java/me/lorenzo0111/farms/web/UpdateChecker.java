@@ -5,7 +5,7 @@
  * -------------------------------------
  */
 
-package me.lorenzo0111.farms.spigot;
+package me.lorenzo0111.farms.web;
 
 import java.io.IOException;
 import java.net.URL;

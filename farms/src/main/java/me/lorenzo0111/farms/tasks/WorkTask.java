@@ -12,9 +12,7 @@ import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
 import me.lorenzo0111.farms.api.objects.FarmType;
 import me.lorenzo0111.farms.api.objects.IFarm;
-import me.lorenzo0111.farms.tasks.worker.BlocksWorker;
-import me.lorenzo0111.farms.tasks.worker.DropsWorker;
-import me.lorenzo0111.farms.tasks.worker.Worker;
+import me.lorenzo0111.farms.tasks.worker.*;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;
@@ -30,6 +28,8 @@ public class WorkTask implements Runnable {
     static {
         WORKERS.put(FarmType.BLOCKS, new BlocksWorker());
         WORKERS.put(FarmType.DROPS, new DropsWorker());
+        WORKERS.put(FarmType.MOB, new MobWorker());
+        WORKERS.put(FarmType.MINER, new MinerWorker());
     }
 
     @Override

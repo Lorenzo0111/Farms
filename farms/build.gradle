@@ -62,6 +62,10 @@ shadowJar {
     relocate("net.kyori.examination","me.lorenzo0111.farms.libs.examination")
     relocate("net.kyori.adventure","me.lorenzo0111.farms.libs.adventure")
     relocate("com.cryptomorin.xseries","me.lorenzo0111.farms.libs.xseries")
+
+    if ("true".equalsIgnoreCase(System.getenv("MOVE_TO_SERVER"))) {
+        destinationDirectory.set(file("../server/plugins"))
+    }
 }
 
 processResources {

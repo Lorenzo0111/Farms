@@ -13,12 +13,14 @@ import me.lorenzo0111.farms.api.FarmsAPI;
 import me.lorenzo0111.farms.api.IFarmsAPI;
 import me.lorenzo0111.farms.api.objects.Farm;
 import me.lorenzo0111.farms.commands.FarmsCommand;
+import me.lorenzo0111.farms.config.LootsConfig;
 import me.lorenzo0111.farms.config.UpdatingConfig;
 import me.lorenzo0111.farms.data.DataManager;
 import me.lorenzo0111.farms.hooks.VaultHook;
 import me.lorenzo0111.farms.hooks.WorldGuardHook;
 import me.lorenzo0111.farms.listeners.*;
-import me.lorenzo0111.farms.spigot.UpdateChecker;
+import me.lorenzo0111.farms.web.FileDownloader;
+import me.lorenzo0111.farms.web.UpdateChecker;
 import me.lorenzo0111.farms.tasks.FarmsTask;
 import me.lorenzo0111.farms.tasks.QueueTask;
 import me.lorenzo0111.farms.tasks.SaveTask;
@@ -38,7 +40,10 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Objects;
 
 @Getter
@@ -46,6 +51,8 @@ public final class Farms extends JavaPlugin {
     private File dataFile;
     private FileConfiguration data;
     private DataManager dataManager;
+
+    private LootsConfig loots;
 
     private File configFile;
     private UpdatingConfig config;
@@ -153,6 +160,17 @@ public final class Farms extends JavaPlugin {
                 .addCustomChart(new SingleLineChart("farms", () -> dataManager.getFarms().size()));
 
         this.updater = new UpdateChecker(this,98747);
+
+        try {
+            Instant now = Instant.now();
+            FileDownloader downloader = new FileDownloader("https://raw.githubusercontent.com/Lorenzo0111/PluginsDatabase/master/Farms/loots.yml");
+            downloader.appendLogger(this.getLogger());
+            if (downloader.download(this.getDataFolder(), "loots.yml")) {
+                Instant end = Instant.now();
+                this.getLogger().info("Downloaded loots.yml in " + Duration.between(now, end).getSeconds() + " seconds.");
+            }
+            loots = new LootsConfig(new File(this.getDataFolder(), "loots.yml"));
+        } catch (MalformedURLException ignored) {}
 
         ms = System.currentTimeMillis() - ms;
         this.getLogger().info(getName() + " v" + getDescription().getVersion() + " enabled in " + ms + "ms.");

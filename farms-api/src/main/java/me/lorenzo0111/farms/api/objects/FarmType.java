@@ -14,7 +14,9 @@ import org.jetbrains.annotations.Contract;
  */
 public enum FarmType {
     BLOCKS(true),
-    DROPS(false);
+    DROPS(false),
+    MOB(false),
+    MINER(false);
 
     private final boolean place;
 
