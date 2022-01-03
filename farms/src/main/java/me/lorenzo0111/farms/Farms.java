@@ -162,10 +162,20 @@ public final class Farms extends JavaPlugin {
         this.updater = new UpdateChecker(this,98747);
 
         try {
+            boolean overWrite = false;
+            File file = new File(this.getDataFolder(), "loots.yml");
+            if (file.exists()) {
+                YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+                if (!config.getString("data.version", this.getDescription().getVersion()).equals(this.getDescription().getVersion())) {
+                    overWrite = true;
+                    this.getLogger().info("Found old loots.yml file. Downloading it again..");
+                }
+            }
+
             Instant now = Instant.now();
             FileDownloader downloader = new FileDownloader("https://raw.githubusercontent.com/Lorenzo0111/PluginsDatabase/master/Farms/loots.yml");
             downloader.appendLogger(this.getLogger());
-            if (downloader.download(this.getDataFolder(), "loots.yml")) {
+            if (downloader.download(this.getDataFolder(), "loots.yml", overWrite)) {
                 Instant end = Instant.now();
                 this.getLogger().info("Downloaded loots.yml in " + Duration.between(now, end).getSeconds() + " seconds.");
             }

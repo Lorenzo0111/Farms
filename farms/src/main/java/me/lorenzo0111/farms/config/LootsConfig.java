@@ -9,6 +9,7 @@ package me.lorenzo0111.farms.config;
 
 import com.cryptomorin.xseries.XMaterial;
 import lombok.Getter;
+import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.config.loots.Loot;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -47,6 +48,7 @@ public class LootsConfig {
     public void reload() {
         loots = new HashMap<>();
         config = YamlConfiguration.loadConfiguration(file);
+        config.set("data.version", Farms.getInstance().getDescription().getVersion());
         for (String key : config.getKeys(false)) {
             try {
                 EntityType type = EntityType.valueOf(key);

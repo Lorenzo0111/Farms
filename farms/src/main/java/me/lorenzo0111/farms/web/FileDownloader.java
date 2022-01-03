@@ -36,10 +36,6 @@ public class FileDownloader {
         this.logger = logger;
     }
 
-    public boolean download(File directory, @NotNull String name) {
-        return download(directory, name, false);
-    }
-
     public boolean download(File directory, @NotNull String name, boolean overwrite) {
         File file = new File(directory, name);
 
