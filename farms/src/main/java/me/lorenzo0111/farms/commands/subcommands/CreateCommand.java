@@ -80,4 +80,9 @@ public class CreateCommand extends SubCommand {
 
         return item;
     }
+
+    public static void resetItem() {
+        item = null;
+        getItem();
+    }
 }

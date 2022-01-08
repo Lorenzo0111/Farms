@@ -19,7 +19,7 @@ permissions:
       - "farms.gui"
       - "farms.remove.all"
       - "farms.reload"
-      - "farms.premium.verify"
+      - "farms.give"
   farms.create:
     description: "Create a farm"
     default: true
@@ -32,5 +32,6 @@ permissions:
   farms.reload:
     description: "Reload the plugin"
     default: op
-  farms.premium.verify:
-    description: "Get verification token, it may be asked by the plugin owner."
+  farms.give:
+    description: "Give the farm item to a player"
+    default: op

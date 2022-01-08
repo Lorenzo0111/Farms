@@ -13,6 +13,7 @@ import me.lorenzo0111.farms.api.FarmsAPI;
 import me.lorenzo0111.farms.api.IFarmsAPI;
 import me.lorenzo0111.farms.api.objects.Farm;
 import me.lorenzo0111.farms.commands.FarmsCommand;
+import me.lorenzo0111.farms.commands.subcommands.CreateCommand;
 import me.lorenzo0111.farms.config.LootsConfig;
 import me.lorenzo0111.farms.config.UpdatingConfig;
 import me.lorenzo0111.farms.data.DataManager;
@@ -204,6 +205,7 @@ public final class Farms extends JavaPlugin {
             e.printStackTrace();
         }
         guiConfig = YamlConfiguration.loadConfiguration(guiFile);
+        CreateCommand.resetItem();
     }
 
     public void reloadData() {

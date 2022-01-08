@@ -7,6 +7,7 @@ not-found: "&cPlayer not found."
 no-permission: "&cYou do not have the permission to execute this command."
 
 commands:
+  no-player: "&cPlease specific a player."
   no-money: "&cYou don't have enough money to buy a farm."
   not-found: "&cCommand not found. Run /farms help for a commands list."
   no-type: "&cThis farm type does not exist."
@@ -23,9 +24,10 @@ commands:
   setup: "&7Now place the farm item."
   remove-all: "&7Destroyed &e&n%count%&7 farms."
   gui: "&6&l»&e&l» &7Farms &e&l«&6&l«"
+  give: "&7You gave &e&n%player%&7 a &e&n%type%&7 farm."
 
 setup:
-  item-name: "&6&l»&e&l» &7Farms Setup &e&l«&6&l«"
+  item-name: "&6&l»&e&l» &7Farms Setup &e&l«&6&l«" # Changing this will invalidate your existing non-placed items
   item-lore: "&7Use this item to setup a &eFarm."
   created: "&7Farm created successfully."
   invalid-item: "&cYou can't farm this item."
