@@ -5,7 +5,7 @@
  * -------------------------------------
  */
 plugins {
-    id "net.kyori.indra.publishing" version "2.1.0"
+    id "maven-publish"
 }
 
 repositories {
@@ -29,8 +29,31 @@ dependencies {
     compileOnly "org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT"
 }
 
-indra {
-    mitLicense()
-    github("Lorenzo0111", "Farms")
-    publishReleasesTo("lorenzo", "https://dl.lorenzo0111.me/")
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = group
+            artifactId = "FarmsAPI"
+            version = project.version
+
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            url = "https://dl.lorenzo0111.me/releases/"
+
+            def mavenUsername = System.getenv("ORG_GRADLE_PROJECT_repoUsername") ? System.getenv("ORG_GRADLE_PROJECT_repoUsername") : project.property("repoUsername")
+            def mavenPassword = System.getenv("ORG_GRADLE_PROJECT_repoPassword") ? System.getenv("ORG_GRADLE_PROJECT_repoPassword") : project.property("repoPassword")
+
+            if(mavenUsername != null && mavenPassword != null) {
+                credentials {
+                    username = mavenUsername
+                    password = mavenPassword
+                }
+            }
+        }
+    }
 }
