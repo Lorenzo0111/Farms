@@ -25,6 +25,7 @@ commands:
   remove-all: "&7Destroyed &e&n%count%&7 farms."
   gui: "&6&l»&e&l» &7Farms &e&l«&6&l«"
   give: "&7You gave &e&n%player%&7 a &e&n%type%&7 farm."
+  list: "&7List of available types: &e"
 
 setup:
   item-name: "&6&l»&e&l» &7Farms Setup &e&l«&6&l«" # Changing this will invalidate your existing non-placed items

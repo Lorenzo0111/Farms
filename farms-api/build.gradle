@@ -4,6 +4,9 @@
  * https://github.com/Lorenzo0111
  * -------------------------------------
  */
+plugins {
+    id "net.kyori.indra.publishing" version "2.1.0"
+}
 
 repositories {
     mavenCentral()
@@ -22,6 +25,12 @@ tasks.withType(Jar){
 }
 
 dependencies {
-    compileOnly "org.jetbrains:annotations:21.0.1"
+    compileOnly 'org.jetbrains:annotations:22.0.0'
     compileOnly "org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT"
+}
+
+indra {
+    mitLicense()
+    github("Lorenzo0111", "Farms")
+    publishReleasesTo("lorenzo", "https://dl.lorenzo0111.me/")
 }

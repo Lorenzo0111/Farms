@@ -23,6 +23,9 @@ permissions:
   farms.create:
     description: "Create a farm"
     default: true
+  farms.list:
+    description: "List all farms type"
+    default: true
   farms.gui:
     description: "Open a gui with all farms"
     default: op
