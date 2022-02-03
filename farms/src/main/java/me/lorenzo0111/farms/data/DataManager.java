@@ -54,14 +54,13 @@ public class DataManager {
 
     public void save(boolean disabling) {
         plugin.getData().set("data", farms);
+        plugin.reloadData();
         if (!disabling)
             this.init();
     }
 
     public Farm create(Farm farm) {
         farms.add(farm);
-        this.save(false);
-        plugin.reloadData();
         return farm;
     }
 

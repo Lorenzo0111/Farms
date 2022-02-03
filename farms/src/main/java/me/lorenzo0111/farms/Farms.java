@@ -24,7 +24,6 @@ import me.lorenzo0111.farms.web.FileDownloader;
 import me.lorenzo0111.farms.web.UpdateChecker;
 import me.lorenzo0111.farms.tasks.FarmsTask;
 import me.lorenzo0111.farms.tasks.QueueTask;
-import me.lorenzo0111.farms.tasks.SaveTask;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
@@ -150,7 +149,6 @@ public final class Farms extends JavaPlugin {
         farmsCmd.setTabCompleter(command);
 
         this.getLogger().info("Scheduling tasks...");
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new SaveTask(this), 0, 60 * 20L);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new FarmsTask(this), 0, getConfig().getInt("tasks.grow", 5) * 20L);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new QueueTask(this), 0, getConfig().getInt("tasks.collect", 10) * 20L);
 
@@ -196,7 +194,6 @@ public final class Farms extends JavaPlugin {
 
     public void reload() {
         dataManager.save(false);
-        this.reloadData();
 
         try {
             messages = new UpdatingConfig(messagesFile);
