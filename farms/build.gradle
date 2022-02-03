@@ -41,7 +41,7 @@ dependencies {
     implementation "net.kyori:adventure-platform-bukkit:4.0.1"
     implementation "dev.triumphteam:triumph-gui:3.1.1"
     implementation "com.github.cryptomorin:XSeries:8.6.1"
-    implementation("com.github.harry0198:HexiTextLib:9a9ce45ec1") {
+    implementation("com.github.l1m0n3:HexiTextLib:b9e30055b7") {
         exclude module: "annotations"
     }
 }
