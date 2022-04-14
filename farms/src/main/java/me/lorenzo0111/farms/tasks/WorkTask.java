@@ -30,6 +30,7 @@ public class WorkTask implements Runnable {
         WORKERS.put(FarmType.DROPS, new DropsWorker());
         WORKERS.put(FarmType.MOB, new MobWorker());
         WORKERS.put(FarmType.MINER, new MinerWorker());
+        WORKERS.put(FarmType.SPAWNER, new SpawnerWorker());
     }
 
     @Override

@@ -13,7 +13,11 @@ import dev.triumphteam.gui.components.InteractionModifier;
 import dev.triumphteam.gui.guis.Gui;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
+import me.lorenzo0111.farms.api.objects.FarmType;
 import me.lorenzo0111.farms.api.objects.Item;
+import me.lorenzo0111.farms.guis.type.CropsValidator;
+import me.lorenzo0111.farms.guis.type.SpawnerValidator;
+import me.lorenzo0111.farms.guis.type.TypeValidator;
 import me.lorenzo0111.farms.utils.BlockUtils;
 import me.lorenzo0111.farms.utils.SerializationUtils;
 import me.lorenzo0111.farms.utils.TextUtils;
@@ -26,11 +30,19 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class TypeGUI extends Gui {
+    private static final Map<FarmType, TypeValidator> VALIDATORS = new HashMap<>();
     private final Farm farm;
     private final Farms plugin;
+
+    static {
+        VALIDATORS.put(FarmType.BLOCKS, new CropsValidator());
+        VALIDATORS.put(FarmType.SPAWNER, new SpawnerValidator());
+    }
 
     public TypeGUI(Farm farm, @NotNull Farms plugin) {
         super(1, TextUtils.text(plugin.getMessages(), "edit.type"), EnumSet.noneOf(InteractionModifier.class));
@@ -57,9 +69,9 @@ public class TypeGUI extends Gui {
             if (item == null || item.getType().equals(Material.AIR))
                 return;
 
-            ConfigurationSection section = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("items"));
+            ConfigurationSection section = Objects.requireNonNull(Farms.getInstance().getConfig().getConfigurationSection("items"));
 
-            if (!section.contains(item.getType().toString())) {
+            if (!VALIDATORS.get(farm.getType()).validate(item.getType())) {
                 e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getMessages().getString("prefix") + plugin.getMessages().getString("edit.no-type")));
                 return;
             }
@@ -67,8 +79,10 @@ public class TypeGUI extends Gui {
             final Material old = farm.getBlock();
 
             Material newType = Material.getMaterial(section.getString(item.getType().toString(), item.getType().toString()));
-            farm.setBlock(newType);
-            BlockUtils.full(farm, old);
+            if (farm.getType().place()) {
+                farm.setBlock(newType);
+                BlockUtils.full(farm, old);
+            }
         });
 
         this.getFiller().fill(ItemBuilder.from(filler.getItem()).asGuiItem(e -> e.setCancelled(true)));

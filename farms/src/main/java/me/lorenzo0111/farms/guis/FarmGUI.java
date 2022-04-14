@@ -127,7 +127,7 @@ public class FarmGUI extends Gui {
             }
             farm.getItems().clear();
         }));
-        if (farm.getType().place()) {
+        if (farm.getType().canSelect()) {
             this.setItem(type.getRow(),type.getColumn(), ItemBuilder.from(type.getItem()).asGuiItem(e -> {
                 e.getWhoClicked().closeInventory();
                 new TypeGUI(farm,plugin).open(player);
