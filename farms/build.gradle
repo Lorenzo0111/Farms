@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly "org.jetbrains:annotations:22.0.0"
+    compileOnly "org.jetbrains:annotations:23.0.0"
     compileOnly "org.projectlombok:lombok:1.18.22"
     annotationProcessor "org.projectlombok:lombok:1.18.22"
 
@@ -35,12 +35,12 @@ dependencies {
 
     implementation project(":farms-api")
 
-    implementation "org.bstats:bstats-bukkit:2.2.1"
-    implementation "de.tr7zw:item-nbt-api:2.9.0-SNAPSHOT"
-    implementation "net.kyori:adventure-api:4.9.3"
-    implementation "net.kyori:adventure-platform-bukkit:4.0.1"
-    implementation "dev.triumphteam:triumph-gui:3.1.1"
-    implementation "com.github.cryptomorin:XSeries:8.6.1"
+    implementation "org.bstats:bstats-bukkit:3.0.0"
+    implementation "de.tr7zw:item-nbt-api:2.9.2"
+    implementation "net.kyori:adventure-api:4.10.1"
+    implementation "net.kyori:adventure-platform-bukkit:4.1.0"
+    implementation "dev.triumphteam:triumph-gui:3.1.2"
+    implementation "com.github.cryptomorin:XSeries:8.7.1"
     implementation("com.github.l1m0n3:HexiTextLib:b9e30055b7") {
         exclude module: "annotations"
     }
