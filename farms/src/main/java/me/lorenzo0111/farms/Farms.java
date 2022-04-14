@@ -20,6 +20,7 @@ import me.lorenzo0111.farms.data.DataManager;
 import me.lorenzo0111.farms.hooks.VaultHook;
 import me.lorenzo0111.farms.hooks.WorldGuardHook;
 import me.lorenzo0111.farms.listeners.*;
+import me.lorenzo0111.farms.premium.PremiumHandler;
 import me.lorenzo0111.farms.web.FileDownloader;
 import me.lorenzo0111.farms.web.UpdateChecker;
 import me.lorenzo0111.farms.tasks.FarmsTask;
@@ -180,6 +181,12 @@ public final class Farms extends JavaPlugin {
             }
             loots = new LootsConfig(new File(this.getDataFolder(), "loots.yml"));
         } catch (MalformedURLException ignored) {}
+
+        if (PremiumHandler.isPremium()) {
+            this.getLogger().info("Premium detected! Thanks for purchasing the plugin!");
+        } else {
+            this.getLogger().info("If you want to support my work you can buy the premium version on: https://www.spigotmc.org/resources/94931/");
+        }
 
         ms = System.currentTimeMillis() - ms;
         this.getLogger().info(getName() + " v" + getDescription().getVersion() + " enabled in " + ms + "ms.");
