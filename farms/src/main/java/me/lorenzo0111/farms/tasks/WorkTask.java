@@ -51,5 +51,6 @@ public class WorkTask implements Runnable {
         }
 
         worker.work(plugin.getDataManager(),(Farm)farm);
+        plugin.debug("Worked on farm &e" + farm.getUuid());
     }
 }

@@ -61,6 +61,8 @@ public class DataManager {
 
     public Farm create(Farm farm) {
         farms.add(farm);
+        int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new WorkTask(plugin,farm.getUuid()), 0, plugin.getConfig().getInt("tasks.collect", 10) * 20L);
+        farm.setTask(task);
         return farm;
     }
 

@@ -159,7 +159,7 @@ public final class Farms extends JavaPlugin {
         new Metrics(this, 12310)
                 .addCustomChart(new SingleLineChart("farms", () -> dataManager.getFarms().size()));
 
-        this.updater = new UpdateChecker(this,98747);
+        this.updater = new UpdateChecker(this,PremiumHandler.isPremium() ? 94931 : 98747);
 
         try {
             boolean overWrite = false;
