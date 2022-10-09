@@ -1,6 +1,6 @@
 /*
  * -------------------------------------
- * Copyright Lorenzo0111 2021
+ * Copyright Lorenzo0111 2022
  * https://github.com/Lorenzo0111
  * -------------------------------------
  */
@@ -56,6 +56,8 @@ public final class BlockUtils {
     public static void full(IFarm farm, Material old) {
         Block item = farm.getLocation().getBlock();
         BlockUtils.near(item, 2).forEach(block -> {
+            if (block.equals(item)) return;
+
             if (block.getType().equals(Material.AIR) || block.getType().equals(old)) {
                 block.setType(farm.getBlock());
             }
