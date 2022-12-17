@@ -19,7 +19,7 @@ subprojects {
     compileJava.options.encoding = "UTF-8"
 
     group = 'me.lorenzo0111'
-    version = '1.8'
+    version = '1.8.1'
 
     jar {
         archiveVersion.set("")
