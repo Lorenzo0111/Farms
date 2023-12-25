@@ -58,12 +58,15 @@ public class PlaceListener implements Listener {
 
         Location location = event.getBlock().getLocation().subtract(0,1,0);
         Material before = location.getBlock().getType();
+
+        int radius = plugin.getConfig().getInt("default-radius");
+
         Farm farm = plugin.getDataManager().create(new Farm(
                 event.getBlock().getLocation(),
                 UUID.randomUUID(),
                 event.getPlayer().getUniqueId(),
                 level,
-                2,
+                radius,
                 type,
                 Material.WHEAT,
                 before));
@@ -72,7 +75,7 @@ public class PlaceListener implements Listener {
 
         location.getBlock().setType(Material.GOLD_BLOCK);
         if (farm.getType().place()) {
-            BlockUtils.near(location.getBlock(), 2).forEach(block -> {
+            BlockUtils.near(location.getBlock(), farm.getRadius()).forEach(block -> {
                 if (block.getType().equals(Material.DIRT) || block.getType().equals(XMaterial.GRASS_BLOCK.parseMaterial()) || block.getType().equals(Material.AIR)) {
                     block.setType(XMaterial.FARMLAND.parseMaterial());
                 }

@@ -46,7 +46,7 @@ public final class BlockUtils {
 
     public static void full(IFarm farm) {
         Block item = farm.getLocation().getBlock();
-        BlockUtils.near(item, 2).forEach(block -> {
+        BlockUtils.near(item, farm.getRadius()).forEach(block -> {
             if (block.getType().equals(Material.AIR)) {
                 block.setType(farm.getBlock());
             }
@@ -55,7 +55,7 @@ public final class BlockUtils {
 
     public static void full(IFarm farm, Material old) {
         Block item = farm.getLocation().getBlock();
-        BlockUtils.near(item, 2).forEach(block -> {
+        BlockUtils.near(item, farm.getRadius()).forEach(block -> {
             if (block.equals(item)) return;
 
             if (block.getType().equals(Material.AIR) || block.getType().equals(old)) {
@@ -67,7 +67,7 @@ public final class BlockUtils {
     public static void full(IFarm farm, Location... ignore) {
         Block item = farm.getLocation().getBlock();
         List<Location> ignoreList = Arrays.asList(ignore);
-        BlockUtils.near(item, 2).forEach(block -> {
+        BlockUtils.near(item, farm.getRadius()).forEach(block -> {
             if (block.getType().equals(Material.AIR) && !ignoreList.contains(block.getLocation())) {
                 block.setType(farm.getBlock());
             }
