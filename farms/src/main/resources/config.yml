@@ -35,3 +35,5 @@ levels:
 tasks:
   grow: 5
   collect: 10
+
+default-radius: 2
