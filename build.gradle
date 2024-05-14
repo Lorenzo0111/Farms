@@ -1,13 +1,13 @@
 /*
  * -------------------------------------
- * Copyright Lorenzo0111 2022
+ * Copyright Lorenzo0111 2024
  * https://github.com/Lorenzo0111
  * -------------------------------------
  */
 
 plugins {
     id 'java'
-    id "com.github.johnrengelman.shadow" version "7.0.0"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
 compileJava.options.encoding = "UTF-8"
@@ -20,6 +20,10 @@ subprojects {
 
     group = 'me.lorenzo0111'
     version = '1.8.1'
+
+    repositories {
+        mavenCentral()
+    }
 
     jar {
         archiveVersion.set("")
