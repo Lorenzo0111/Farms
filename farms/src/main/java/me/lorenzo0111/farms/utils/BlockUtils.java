@@ -8,7 +8,6 @@
 package me.lorenzo0111.farms.utils;
 
 import me.lorenzo0111.farms.api.objects.IFarm;
-import org.apache.commons.lang.math.IntRange;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -31,9 +30,18 @@ public final class BlockUtils {
     }
 
     public static boolean inCuboid(Location block, Location pos1, Location pos2){
-        return new IntRange(pos1.getX(), pos2.getX()).containsDouble(block.getX())
-                && new IntRange(pos1.getY(), pos2.getY()).containsDouble(block.getY())
-                &&  new IntRange(pos1.getZ(), pos2.getZ()).containsDouble(block.getZ());
+        double minX = Math.min(pos1.getX(), pos2.getX());
+        double maxX = Math.max(pos1.getX(), pos2.getX());
+        double minY = Math.min(pos1.getY(), pos2.getY());
+        double maxY = Math.max(pos1.getY(), pos2.getY());
+        double minZ = Math.min(pos1.getZ(), pos2.getZ());
+        double maxZ = Math.max(pos1.getZ(), pos2.getZ());
+
+        boolean containsX = block.getX() >= minX && block.getX() <= maxX;
+        boolean containsY = block.getY() >= minY && block.getY() <= maxY;
+        boolean containsZ = block.getZ() >= minZ && block.getZ() <= maxZ;
+
+        return containsX && containsY && containsZ;
     }
 
     public static Location posOne(IFarm farm) {
