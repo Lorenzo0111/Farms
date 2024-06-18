@@ -36,7 +36,7 @@ public class BlocksWorker implements Worker {
                 continue;
             }
 
-            if (block.getType().equals(CreateCommand.getItem().getItem().getType()))
+            if (block.getType().equals(CreateCommand.getMATERIAL()))
                 continue;
 
             if (block.getState().getData() instanceof Crops && XBlock.getAge(block) != 7) {

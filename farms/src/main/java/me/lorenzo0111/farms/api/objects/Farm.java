@@ -8,7 +8,7 @@
 package me.lorenzo0111.farms.api.objects;
 
 import com.cryptomorin.xseries.XMaterial;
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.changeme.nbtapi.NBT;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import me.lorenzo0111.farms.Farms;
@@ -126,10 +126,11 @@ public class Farm implements ConfigurationSerializable, IFarm {
 
     @Override
     public void pickup(@NotNull HumanEntity player) {
-        NBTItem item = CreateCommand.getItem();
-        item.setInteger("farm_level", this.getLevel());
-        item.setString("farm_type", this.getType().name());
-        player.getInventory().addItem(item.getItem());
+        ItemStack item = CreateCommand.getItem(this.getType());
+        NBT.modify(item, nbt -> {
+            nbt.setInteger("farm_level", this.getLevel());
+        });
+        player.getInventory().addItem(item);
     }
 
     public @Nullable Entity getMinion() {

@@ -8,9 +8,9 @@
 package me.lorenzo0111.farms.listeners;
 
 import com.cryptomorin.xseries.XMaterial;
+import de.tr7zw.changeme.nbtapi.NBT;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTContainer;
-import de.tr7zw.changeme.nbtapi.NBTItem;
 import lombok.RequiredArgsConstructor;
 import me.lorenzo0111.farms.Farms;
 import me.lorenzo0111.farms.api.objects.Farm;
@@ -35,14 +35,13 @@ public class PlaceListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
     public void onPlace(@NotNull BlockPlaceEvent event) {
-        if (!event.getItemInHand().getType().equals(CreateCommand.getItem().getItem().getType())) return;
+        if (!event.getItemInHand().getType().equals(CreateCommand.getMATERIAL())) return;
 
-        NBTContainer item = NBTItem.convertItemtoNBT(event.getItemInHand());
+        String customItem = NBT.get(event.getItemInHand(), nbt -> {
+            return nbt.getString("custom_item");
+        });
 
-        NBTCompound compound = item.getCompound("tag");
-        if (compound == null) return;
-
-        if (!"farms".equals(compound.getString("custom_item"))) {
+        if (!"farms".equals(customItem)) {
             return;
         }
 
@@ -53,8 +52,13 @@ public class PlaceListener implements Listener {
 
         event.getBlock().setType(Material.AIR);
 
-        int level = compound.getInteger("farm_level");
-        FarmType type = FarmType.valueOf(compound.getString("farm_type"));
+        int level = NBT.get(event.getItemInHand(), nbt -> {
+            return nbt.getInteger("farm_level");
+        });
+
+        FarmType type = FarmType.valueOf(NBT.get(event.getItemInHand(), nbt -> {
+            return nbt.getString("farm_type");
+        }));
 
         Location location = event.getBlock().getLocation().subtract(0,1,0);
         Material before = location.getBlock().getType();

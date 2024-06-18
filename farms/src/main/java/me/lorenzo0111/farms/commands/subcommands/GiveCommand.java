@@ -7,13 +7,13 @@
 
 package me.lorenzo0111.farms.commands.subcommands;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.lorenzo0111.farms.api.objects.FarmType;
 import me.lorenzo0111.farms.commands.FarmsCommand;
 import me.lorenzo0111.farms.commands.SubCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,9 +65,7 @@ public class GiveCommand extends SubCommand {
                 .replace("%player%", target.getName())
                 .replace("%type%", type.name().toLowerCase())));
 
-        NBTItem item = CreateCommand.getItem();
-        item.setInteger("farm_level", 1);
-        item.setString("farm_type", type.name());
-        target.getInventory().addItem(item.getItem());
+        ItemStack item = CreateCommand.getItem(type);
+        target.getInventory().addItem(item);
     }
 }
