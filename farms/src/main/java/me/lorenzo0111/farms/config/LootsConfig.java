@@ -51,13 +51,15 @@ public class LootsConfig {
         config.set("data.version", Farms.getInstance().getDescription().getVersion());
         this.save();
         for (String key : config.getKeys(false)) {
+            if (key.equalsIgnoreCase("data")) continue;
+
             try {
                 EntityType type = EntityType.valueOf(key);
                 List<Loot> loots = new ArrayList<>();
 
                 for (String item : config.getStringList(key)) {
                     int min = Integer.parseInt(item.split("-")[0]);
-                    int max = Integer.parseInt(item.split("-")[1]);
+                    int max = Integer.parseInt(item.split("-")[1].split(":")[0]);
                     String material = item.split(":")[1];
 
                     loots.add(new Loot(min, max, XMaterial.matchXMaterial(material).orElseThrow(IllegalArgumentException::new)));
