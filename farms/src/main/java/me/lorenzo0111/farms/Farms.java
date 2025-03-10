@@ -1,6 +1,6 @@
 /*
  * -------------------------------------
- * Copyright Lorenzo0111 2024
+ * Copyright Lorenzo0111 2025
  * https://github.com/Lorenzo0111
  * -------------------------------------
  */
@@ -183,8 +183,6 @@ public final class Farms extends JavaPlugin {
 
         if (PremiumHandler.isPremium()) {
             this.getLogger().info("Premium detected! Thanks for purchasing the plugin!");
-        } else {
-            this.getLogger().info("If you want to support my work you can buy the premium version on: https://www.spigotmc.org/resources/94931/");
         }
 
         ms = System.currentTimeMillis() - ms;
